@@ -5,15 +5,15 @@
 
     <form action="app/auth/login.php" method="post">
         <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email">Username or email</label>
             <input class="form-control" type="email" name="email" placeholder="francis@darjeeling.com" required>
-            <small class="form-text text-muted">Please provide the your email address.</small>
+            <small class="form-text text-muted">Please provide your username or your email address.</small>
         </div><!-- /form-group -->
 
         <div class="form-group">
             <label for="password">Password</label>
             <input class="form-control" type="password" name="password" required>
-            <small class="form-text text-muted">Please provide the your password (passphrase).</small>
+            <small class="form-text text-muted">Please provide your password (passphrase).</small>
         </div><!-- /form-group -->
 
         <button type="submit" class="btn btn-primary">Login</button>
@@ -23,10 +23,10 @@
 <article>
     <h1>Register</h1>
 
-    <form action="app/auth/login.php" method="post">
+    <form action="app/auth/register.php" method="post">
         <div class="form-group">
             <label for="username">Username</label>
-            <input class="form-control" type="username" name="username" placeholder="Francis Darjeeling" required>
+            <input class="form-control" type="text" name="username" placeholder="Francis Darjeeling" required>
             <small class="form-text text-muted">Please provide your username.</small>
         </div><!-- /form-group -->
 
@@ -39,10 +39,10 @@
         <div class="form-group">
             <label for="password">Password</label>
             <input class="form-control" type="password" name="password" required>
-            <small class="form-text text-muted">Please provide the your password (passphrase).</small>
+            <small class="form-text text-muted">Please provide your password (passphrase).</small>
         </div><!-- /form-group -->
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Register</button>
     </form>
 </article>
 

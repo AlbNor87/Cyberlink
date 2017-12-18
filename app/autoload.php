@@ -24,6 +24,3 @@ define('DB_PASSWORD', "root");
 
 // Setup the database connection.
 $pdo = new PDO('mysql:host='.DB_HOST.'; dbname='.DB_NAME, DB_USERNAME, DB_PASSWORD);
-
-// Setup the database connection.
-$pdo = new PDO($config['database_path']);
