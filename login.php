@@ -5,9 +5,9 @@
 
     <form action="app/auth/login.php" method="post">
         <div class="form-group">
-            <label for="email">Username or email</label>
+            <label for="email">Email</label>
             <input class="form-control" type="email" name="email" placeholder="francis@darjeeling.com" required>
-            <small class="form-text text-muted">Please provide your username or your email address.</small>
+            <small class="form-text text-muted">Please provide your email address.</small>
         </div><!-- /form-group -->
 
         <div class="form-group">
@@ -17,6 +17,10 @@
         </div><!-- /form-group -->
 
         <button type="submit" class="btn btn-primary">Login</button>
+        <?php if (isset($_SESSION['message'])): ?>
+          <p><?php echo $_SESSION['message']; ?></p>
+        <?php endif; ?>
+
     </form>
 </article>
 

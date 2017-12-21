@@ -8,14 +8,18 @@ if (isset($_POST['email'],$_POST['password'])) {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 
-    if (login($email, $password, $pdo)) {
+    var_dump($email);
+    emailExistsInDB($email);
+    var_dump(emailExistsInDB($email));
 
-        header("Location:/index.php");
-    }
-    else {
-
-        header("Location:/login.php");
-    }
+    // if (login($email, $password, $pdo)) {
+    //
+    //     header("Location:/index.php");
+    // }
+    // else {
+    //
+    //     header("Location:/login.php");
+    // }
 
 };
 

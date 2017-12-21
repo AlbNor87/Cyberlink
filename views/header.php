@@ -13,11 +13,10 @@ require __DIR__.'/../app/autoload.php';
 
     <title><?php echo $config['title']; ?></title>
 
-    
-
     <link rel="stylesheet" href="/assets/styles/main.css">
 </head>
 <body>
+
     <?php require __DIR__.'/navigation.php'; ?>
 
     <div class="container py-5">
