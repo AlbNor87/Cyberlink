@@ -94,7 +94,7 @@ function updateEmail($email, $id, $password, $pdo) {
           $statement->execute();
 
           $_SESSION['email'] = $email;
-          $_SESSION['message'] = "Your email adress was sucessfully updated!";
+          $_SESSION['message'] = "Your email adress was successfully updated!";
 
         }
 
