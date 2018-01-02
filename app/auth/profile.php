@@ -31,3 +31,44 @@ if (isset($_POST['newPassword'],$_POST['password'])) {
     header("Location:/profile.php");
 
 };
+
+
+if (isset($_FILES['avatar'])) {
+  $avatar = $_FILES['avatar'];
+  $name = $avatar['name'];
+  $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
+  $filetype = pathinfo($name, PATHINFO_EXTENSION);
+  $allowed = ['png', 'jpg', 'jpeg'];
+  $dir = 'uploads';
+  $filename = __DIR__.'/'.$dir.'/'.$id.'.'.$filetype;
+  $email = $_SESSION['email'];
+
+  if (!in_array($filetype, $allowed)) {
+          $errors[] = 'The uploaded file type is not allowed.';
+          echo print_r($errors);
+          $_SESSION['error_mes'] = "The uploaded file type is not allowed.";
+      }
+  elseif ($_FILES['avatar']["size"] > 3145728) {
+      echo "The uploaded file exceeded the file size limit.";
+      $_SESSION['error_mes'] = "The uploaded file exceeded the file size limit.";
+  }
+  else {
+    move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.'/'.$id.'.'.$filetype);
+
+  }
+
+  $target_path="uploads/";
+  $target_path=$target_path.basename($filename);
+
+    $statement = $pdo->prepare("UPDATE Users SET avatar = :target_path WHERE email = :email");
+    $statement->bindParam(':target_path', $target_path, PDO::PARAM_STR);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+  $_SESSION['message'] = "Your avatar was successfully uploaded!";
+  $_SESSION['avatar'] = $target_path;
+    header("Location:/profile.php");
+
+};

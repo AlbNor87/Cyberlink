@@ -2,29 +2,24 @@
 
 <?php
 
-if (isset($_FILES['avatar'])) {
+if (isset($_FILES['test'])) {
 
-$avatar = $_FILES['avatar'];
-$date = date("Ymd");
-$name = $avatar['name'];
-$dir = 'uploads';
+  echo "stringstringstringstringstringstringstring";
 
+$test = $_FILES['test'];
+$tmp_name = $_FILES['test']['tmp_name'];
+$name1 = $test['name'];
+$store = 'uploads/';
+$test_loads = 'test_loads';
+$dir2 = __DIR__;
 
-if (!in_array($avatar['type'], ['image/jpeg'])) {
-        $errors[] = 'The uploaded file type is not allowed.';
-        echo print_r($errors);
-    }
-elseif ($_FILES['avatar']["size"] > 3145728) {
-    echo "The uploaded file exceeded the file size limit.";
-}
-else {
-  move_uploaded_file($avatar["tmp_name"], __DIR__.'/'.$dir.'/'.$date.'-'.$name);
-}
+move_uploaded_file($tmp_name, __DIR__.'/..'.'/'.$test_loads.'/'.$name1);
+
+// __DIR__.'/'.$date.'-'.$name);
 
 }
 
 ?>
-
 
 <article>
     <h1>Email</h1>
@@ -80,14 +75,38 @@ else {
 <article>
     <h1>Avatar</h1>
 
-    <?php var_dump($_FILES); ?>
+    <?php
 
-    <form class="" action="/profile.php" method="post" enctype="multipart/form-data">
+    if (isset($_SESSION['avatar'])) {
+
+      $path = $_SESSION['avatar'];
+
+      echo " <img src='$path' width='280' height='280'> ";
+      echo $path;
+      echo "<br>";
+      var_dump($_SESSION['error_mes']);
+    }
+
+     ?>
+
+     <img src="<?php echo $post['avatar'];?>">
+
+    <form class="" action="app/auth/profile.php" method="post" enctype="multipart/form-data">
       <input type="file" name="avatar" accept=".png, .jpeg, .jpg" required>
 
       <button type="submit" name="upload">Upload</button>
 
     </form>
+
+
+
+    <form class="" action="profile.php" method="post" enctype="multipart/form-data">
+      <input type="file" name="test" accept=".png, .jpeg, .jpg" required>
+
+      <button type="submit" name="upload">Upload</button>
+
+    </form>
+
 </article>
 
 <article>

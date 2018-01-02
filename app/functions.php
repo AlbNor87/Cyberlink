@@ -60,6 +60,7 @@ function login($email, $password, $pdo) {
       $_SESSION['email'] = $user['email'];
       $_SESSION['authenticated'] = true;
       $_SESSION['message'] = "Welcome, ".$user['username']."!";
+      $_SESSION['avatar'] = $user['avatar'];
 
       return true;
 
