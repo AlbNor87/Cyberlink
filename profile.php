@@ -16,8 +16,8 @@
         </div><!-- /form-group -->
 
         <button type="submit" class="btn btn-primary">Submit</button>
-        <?php if (isset($_SESSION['message'])): ?>
-          <p><?php echo $_SESSION['message']; ?></p>
+        <?php if (isset($_SESSION['message_updateEmail'])): ?>
+          <p><?php echo $_SESSION['message_updateEmail']; ?></p>
         <?php endif; ?>
 
     </form>
@@ -44,9 +44,10 @@
 
 
         <button type="submit" class="btn btn-primary">Submit</button>
-        <?php if (isset($_SESSION['newPassword'])): ?>
-          <p><?php echo $_SESSION['newPassword']; ?></p>
+        <?php if (isset($_SESSION['message_updatePassword'])): ?>
+          <p><?php echo $_SESSION['message_updatePassword']; ?></p>
         <?php endif; ?>
+
 
     </form>
 </article>
@@ -65,6 +66,9 @@
       <input type="file" name="avatar" accept=".png, .jpeg, .jpg" required>
       <br>
       <button type="submit" name="upload">Upload</button>
+      <?php if (isset($_SESSION['message_updateAvatar'])): ?>
+        <p><?php echo $_SESSION['message_updateAvatar']; ?></p>
+      <?php endif; ?>
 
     </form>
 

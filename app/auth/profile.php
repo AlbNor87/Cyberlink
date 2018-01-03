@@ -51,32 +51,30 @@ if (isset($_FILES['avatar'])) {
 
   //Upload new avatar
   if (!in_array($filetype, $allowed)) {
-        $errors[] = 'The uploaded file type is not allowed.';
-        echo print_r($errors);
-        $_SESSION['error_mes'] = "The uploaded file type is not allowed.";
+        $_SESSION['message_updateAvatar'] = "The uploaded file type is not allowed.";
       }
   elseif ($_FILES['avatar']["size"] > 3145728) {
-      echo "The uploaded file exceeded the file size limit.";
-      $_SESSION['error_mes'] = "The uploaded file exceeded the file size limit.";
+      $_SESSION['message_updateAvatar'] = "The uploaded file exceeded the file size limit. Please choose a picture of a smaller size.";
   }
   else {
     move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.'/'.$id.'.'.$filetype);
 
+    //Update avatar in database
+    $target_path="uploads/";
+    $target_path=$target_path.basename($filename);
+
+    $statement = $pdo->prepare("UPDATE Users SET avatar = :target_path WHERE email = :email");
+    $statement->bindParam(':target_path', $target_path, PDO::PARAM_STR);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $_SESSION['message_updateAvatar'] = "Your avatar was successfully uploaded!";
+    $_SESSION['avatar'] = $target_path;
+
   }
 
-  //Update avatar in database
-  $target_path="uploads/";
-  $target_path=$target_path.basename($filename);
-
-  $statement = $pdo->prepare("UPDATE Users SET avatar = :target_path WHERE email = :email");
-  $statement->bindParam(':target_path', $target_path, PDO::PARAM_STR);
-  $statement->bindParam(':email', $email, PDO::PARAM_STR);
-  $statement->execute();
-
-  $user = $statement->fetch(PDO::FETCH_ASSOC);
-
-  $_SESSION['message'] = "Your avatar was successfully uploaded!";
-  $_SESSION['avatar'] = $target_path;
   header("Location:/profile.php");
 
 };

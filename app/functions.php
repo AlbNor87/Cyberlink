@@ -95,13 +95,13 @@ function updateEmail($email, $id, $password, $pdo) {
           $statement->execute();
 
           $_SESSION['email'] = $email;
-          $_SESSION['message'] = "Your email adress was successfully updated!";
+          $_SESSION['message_updateEmail'] = "Your email adress was successfully updated!";
 
         }
 
         else {
 
-            $_SESSION['message'] = "Whoops. Looks like you missed something. Please try again.";
+            $_SESSION['message_updateEmail'] = "Whoops! The password you typed was incorrect. Please try again.";
 
     }
 
@@ -127,13 +127,13 @@ function updatePassword($id, $newPassword, $password, $pdo) {
             $statement->bindParam(':id', $id, PDO::PARAM_STR);
             $statement->execute();
 
-            $_SESSION['message'] = "Your password was sucessfully updated!";
+            $_SESSION['message_updatePassword'] = "Your password was sucessfully updated!";
 
           }
 
           else {
 
-              $_SESSION['message'] = "Whoops. Looks like you missed something. Please try again.";
+              $_SESSION['message_updatePassword'] = "Whoops! The password you typed was incorrect. Please try again.";
 
           }
 
