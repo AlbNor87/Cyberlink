@@ -9,6 +9,7 @@ if (isset($_POST['email'],$_POST['password'])) {
     $username = filter_var($_POST['username'], FILTER_SANITIZE_EMAIL);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     $passwordHash = password_hash("$password", PASSWORD_DEFAULT);
+    $avatar = 'img/default.png';
 
 
     $usersStatement = $pdo->prepare('SELECT COUNT(*) FROM Users WHERE email = :email');
@@ -23,7 +24,7 @@ if (isset($_POST['email'],$_POST['password'])) {
 
     if ($emailExists === 0){
 
-      $statement = $pdo->prepare("INSERT INTO users(username, email, password) VALUES (:username, :email, :password)");
+      $statement = $pdo->prepare("INSERT INTO users(username, email, password, avatar) VALUES (:username, :email, :password, :avatar)");
       if (!$statement) {
         die(var_dump($pdo->errorInfo()));
       }
@@ -31,6 +32,7 @@ if (isset($_POST['email'],$_POST['password'])) {
       $statement->bindParam(':username', $username, PDO::PARAM_STR);
       $statement->bindParam(':email', $email, PDO::PARAM_STR);
       $statement->bindParam(':password', $passwordHash, PDO::PARAM_STR);
+      $statement->bindParam(':avatar', $avatar, PDO::PARAM_STR);
       $statement->execute();
 
     }

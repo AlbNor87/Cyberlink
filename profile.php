@@ -1,26 +1,5 @@
 <?php require __DIR__.'/views/header.php'; ?>
 
-<?php
-
-if (isset($_FILES['test'])) {
-
-  echo "stringstringstringstringstringstringstring";
-
-$test = $_FILES['test'];
-$tmp_name = $_FILES['test']['tmp_name'];
-$name1 = $test['name'];
-$store = 'uploads/';
-$test_loads = 'test_loads';
-$dir2 = __DIR__;
-
-move_uploaded_file($tmp_name, __DIR__.'/..'.'/'.$test_loads.'/'.$name1);
-
-// __DIR__.'/'.$date.'-'.$name);
-
-}
-
-?>
-
 <article>
     <h1>Email</h1>
 
@@ -75,34 +54,16 @@ move_uploaded_file($tmp_name, __DIR__.'/..'.'/'.$test_loads.'/'.$name1);
 <article>
     <h1>Avatar</h1>
 
-    <?php
+    <?php if (isset($_SESSION['avatar'])): $avatar = $_SESSION['avatar']; ?>
 
-    if (isset($_SESSION['avatar'])) {
+    <img src='<?php echo $avatar ?>' width='180' height='180'>
 
-      $path = $_SESSION['avatar'];
+    <?php endif; ?>
 
-      echo " <img src='$path' width='280' height='280'> ";
-      echo $path;
-      echo "<br>";
-      var_dump($_SESSION['error_mes']);
-    }
-
-     ?>
-
-     <img src="<?php echo $post['avatar'];?>">
 
     <form class="" action="app/auth/profile.php" method="post" enctype="multipart/form-data">
       <input type="file" name="avatar" accept=".png, .jpeg, .jpg" required>
-
-      <button type="submit" name="upload">Upload</button>
-
-    </form>
-
-
-
-    <form class="" action="profile.php" method="post" enctype="multipart/form-data">
-      <input type="file" name="test" accept=".png, .jpeg, .jpg" required>
-
+      <br>
       <button type="submit" name="upload">Upload</button>
 
     </form>
