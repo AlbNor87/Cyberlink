@@ -154,7 +154,7 @@ function updateAvatar($avatar, $name, $id, $filetype, $allowed, $dir, $avatarInD
   else {
 
     //Remove existing avatar for this specific user
-    if ($avatarInDB !== "img/default.png"){
+    if ($avatarInDB !== "img/user.png"){
     unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
     }
 

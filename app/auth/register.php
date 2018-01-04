@@ -9,7 +9,7 @@ if (isset($_POST['email'],$_POST['password'])) {
     $username = filter_var($_POST['username'], FILTER_SANITIZE_EMAIL);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     $passwordHash = password_hash("$password", PASSWORD_DEFAULT);
-    $avatar = 'img/default.png';
+    $avatar = 'img/user.png';
 
     $statement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE email = :email');
     if (!$statement) {
@@ -37,7 +37,7 @@ if (isset($_POST['email'],$_POST['password'])) {
     }
     else {
 
-        $_SESSION['message_register'] = "This email adress already exist in our database!";
+        $_SESSION['message_register'] = "This email adress already exist in the database!";
         header("Location:/login.php");
         exit;
 

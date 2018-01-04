@@ -21,57 +21,59 @@
 
 <?php endif; ?>
 
-<p>This is the home page.</p>
-
 <?php require __DIR__.'/app/posts/posts.php'; ?>
 
-<div class="feed"><h1>This is the feed</h1></div>
-
-<?php var_dump($postsArray)?>
-
+<div class="feed">
 
 <?php foreach ($postsArray as $post): ?>
 
-     <div class="post">
 
-       <div class="post-header">
+  <div class="post-container">
 
-         <div class="title">
-           <?php echo strtoupper($post['title']); ?>
-         </div>
+    <div class="post">
 
-         <div class="date">
-           <?php echo date('Y-m-d', $post['date']); ?>
-         </div>
-       </div>
+      <div class="post-image">
+        <img class="img-responsive" src="<?php echo $post['image'];?>">
+      </div>
 
-       <div class="post-body">
+      <div class="post-content">
 
-         <div class="author">
-           <div class="avatar">
-             <a href="<?php echo $post['url'];?>"><img src="<?php echo $post['avatar'];?>"></a>
-           </div>
-           <?php echo $post['author']; ?>
-         </div><!-- /author -->
+        <div class="post-header">
 
-         <br>
+          <div class="title">
+            <h2><?php echo strtoupper($post['title']); ?></h2>
+          </div>
 
-         <div class="content">
-           <?php echo $post['description']; ?>
-         </div>
-       </div> <!-- /post-body -->
+        </div>
 
-       <div class="post-footer">
+        <div class="post-body">
 
-         <div class="likes">
-           <?php echo "Likes: " . $post['url'];?>
-         </div>
+          <div class="content">
+            <?php echo $post['description']; ?>
+          </div>
 
-       </div>
+        </div> <!-- /post-body -->
 
-     </div> <!-- /post -->
+        <div class="post-footer">
+
+          <div class="author">
+            <p>Submitted on <?php echo date('Y-m-d', $post['date']); ?> by <?php echo $post['author']; ?></p>
+
+          </div><!-- /author -->
+
+          <div class="likes">
+            <p><?php echo "Votes: " . $post['votes'];?></p>
+          </div>
+
+        </div>
+
+      </div><!-- /post-content -->
+
+    </div> <!-- /post -->
+
+  </div><!-- /post-container -->
    <?php endforeach; ?>
 
-
+</div><!-- /feed -->
 
 <?php require __DIR__.'/views/footer.php'; ?>

@@ -55,7 +55,7 @@ if (isset($_FILES['avatar'])) {
   else {
 
     //Remove existing avatar for this specific user
-    if ($avatarInDB !== "img/default.png"){
+    if ($avatarInDB !== "img/user.png"){
     unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
     }
 
