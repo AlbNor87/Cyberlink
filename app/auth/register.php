@@ -10,6 +10,7 @@ if (isset($_POST['email'],$_POST['password'])) {
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     $passwordHash = password_hash("$password", PASSWORD_DEFAULT);
     $avatar = 'img/default.png';
+    // $bio = 'Please provide your biography here...';
 
 
     $usersStatement = $pdo->prepare('SELECT COUNT(*) FROM Users WHERE email = :email');
@@ -33,6 +34,7 @@ if (isset($_POST['email'],$_POST['password'])) {
       $statement->bindParam(':email', $email, PDO::PARAM_STR);
       $statement->bindParam(':password', $passwordHash, PDO::PARAM_STR);
       $statement->bindParam(':avatar', $avatar, PDO::PARAM_STR);
+      // $statement->bindParam(':bio', $bio, PDO::PARAM_STR);
       $statement->execute();
 
     }

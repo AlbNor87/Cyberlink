@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require __DIR__.'/../autoload.php';
 
+
 if (isset($_POST['email'],$_POST['password'])) {
     $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -39,42 +40,63 @@ if (isset($_FILES['avatar'])) {
   $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
   $filetype = pathinfo($name, PATHINFO_EXTENSION);
   $allowed = ['png', 'jpg', 'jpeg'];
-  $dir = 'uploads';
-  $filename = __DIR__.'/'.$dir.'/'.$id.'.'.$filetype;
-  $email = $_SESSION['email'];
+  $dir="uploads/";
   $avatarInDB = $_SESSION['avatar'];
 
-  //Remove existing avatar for this specific user
-  if ($avatarInDB !== "img/default.png"){
-  unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
-  }
+  // updateAvatar($avatar, $name, $id, $filetype, $allowed, $dir, $avatarInDB, $pdo);
 
   //Upload new avatar
   if (!in_array($filetype, $allowed)) {
         $_SESSION['message_updateAvatar'] = "The uploaded file type is not allowed.";
       }
-  elseif ($_FILES['avatar']["size"] > 3145728) {
-      $_SESSION['message_updateAvatar'] = "The uploaded file exceeded the file size limit. Please choose a picture of a smaller size.";
+  elseif ($avatar["size"] > 3145728) {
+      $_SESSION['message_updateAvatar'] = "The uploaded file exceeded the file size limit, please choose a picture of a smaller size. Your old avatar will remain until you replace it.";
   }
   else {
-    move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.'/'.$id.'.'.$filetype);
+
+    //Remove existing avatar for this specific user
+    if ($avatarInDB !== "img/default.png"){
+    unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
+    }
+
+    move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$id.'.'.$filetype);
 
     //Update avatar in database
-    $target_path="uploads/";
-    $target_path=$target_path.basename($filename);
+    $newAvatarInDB = $dir.$id.'.'.$filetype;
 
-    $statement = $pdo->prepare("UPDATE Users SET avatar = :target_path WHERE email = :email");
-    $statement->bindParam(':target_path', $target_path, PDO::PARAM_STR);
-    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement = $pdo->prepare("UPDATE Users SET avatar = :newAvatarInDB WHERE id = :id");
+    $statement->bindParam(':newAvatarInDB', $newAvatarInDB, PDO::PARAM_STR);
+    $statement->bindParam(':id', $id, PDO::PARAM_STR);
     $statement->execute();
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     $_SESSION['message_updateAvatar'] = "Your avatar was successfully uploaded!";
-    $_SESSION['avatar'] = $target_path;
+    $_SESSION['avatar'] = $newAvatarInDB;
 
   }
 
   header("Location:/profile.php");
+
+};
+
+
+if (isset($_POST['bio'])) {
+    $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
+    $newBio = filter_var($_POST['bio'], FILTER_SANITIZE_STRING);
+
+    // updateBio($bio, $id, $pdo);
+
+    $statement = $pdo->prepare("UPDATE Users SET bio = :newBio WHERE id = :id");
+    $statement->bindParam(':newBio', $newBio, PDO::PARAM_STR);
+    $statement->bindParam(':id', $id, PDO::PARAM_STR);
+    $statement->execute();
+
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $_SESSION['message_updateBio'] = "Your bio was successfully updated!";
+    $_SESSION['bio'] = $newBio;
+
+    header("Location:/profile.php");
 
 };
