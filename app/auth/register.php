@@ -10,16 +10,14 @@ if (isset($_POST['email'],$_POST['password'])) {
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     $passwordHash = password_hash("$password", PASSWORD_DEFAULT);
     $avatar = 'img/default.png';
-    // $bio = 'Please provide your biography here...';
 
-
-    $usersStatement = $pdo->prepare('SELECT COUNT(*) FROM Users WHERE email = :email');
-    if (!$usersStatement) {
+    $statement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE email = :email');
+    if (!$statement) {
       die(var_dump($pdo->errorInfo()));
       }
-    $usersStatement->bindParam(':email', $email, PDO::PARAM_STR);
-    $usersStatement->execute();
-    $thisEmailInDbCount = $usersStatement->fetch(PDO::FETCH_ASSOC);
+    $statement->bindParam(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+    $thisEmailInDbCount = $statement->fetch(PDO::FETCH_ASSOC);
 
     $emailExists = (int)$thisEmailInDbCount['COUNT(*)'];
 
@@ -34,8 +32,14 @@ if (isset($_POST['email'],$_POST['password'])) {
       $statement->bindParam(':email', $email, PDO::PARAM_STR);
       $statement->bindParam(':password', $passwordHash, PDO::PARAM_STR);
       $statement->bindParam(':avatar', $avatar, PDO::PARAM_STR);
-      // $statement->bindParam(':bio', $bio, PDO::PARAM_STR);
       $statement->execute();
+
+    }
+    else {
+
+        $_SESSION['message_register'] = "This email adress already exist in our database!";
+        header("Location:/login.php");
+        exit;
 
     }
 

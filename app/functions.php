@@ -21,13 +21,13 @@ if (!function_exists('redirect')) {
 
 function emailExistsInDB($email, $pdo) {
 
-  $usersStatement = $pdo->prepare('SELECT COUNT(*) FROM Users WHERE email = :email');
-  if (!$usersStatement) {
+  $statement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE email = :email');
+  if (!$statement) {
     die(var_dump($pdo->errorInfo()));
     }
-  $usersStatement->bindParam(':email', $email, PDO::PARAM_STR);
-  $usersStatement->execute();
-  $thisEmailInDbCount = $usersStatement->fetch(PDO::FETCH_ASSOC);
+  $statement->bindParam(':email', $email, PDO::PARAM_STR);
+  $statement->execute();
+  $thisEmailInDbCount = $statement->fetch(PDO::FETCH_ASSOC);
   $emailExists = (int)$thisEmailInDbCount['COUNT(*)'];
 
   if ($emailExists > 0) {
@@ -47,7 +47,7 @@ function emailExistsInDB($email, $pdo) {
 
 function login($email, $password, $pdo) {
 
-    $statement = $pdo->prepare('SELECT * FROM Users WHERE email = :email');
+    $statement = $pdo->prepare('SELECT * FROM users WHERE email = :email');
     $statement->bindParam(':email', $email, PDO::PARAM_STR);
     $statement->execute();
 
@@ -81,7 +81,7 @@ function login($email, $password, $pdo) {
 
 function updateEmail($email, $id, $password, $pdo) {
 
-    $statement = $pdo->prepare('SELECT * FROM Users WHERE id = :id');
+    $statement = $pdo->prepare('SELECT * FROM users WHERE id = :id');
     $statement->bindParam(':id', $id, PDO::PARAM_STR);
     $statement->execute();
 
@@ -89,7 +89,7 @@ function updateEmail($email, $id, $password, $pdo) {
 
         if (password_verify ($password, $user['password'])) {
 
-          $statement = $pdo->prepare("UPDATE Users SET email = :email WHERE id = :id");
+          $statement = $pdo->prepare("UPDATE users SET email = :email WHERE id = :id");
 
           $statement->bindParam(':id', $id, PDO::PARAM_STR);
           $statement->bindParam(':email', $email, PDO::PARAM_STR);
@@ -114,7 +114,7 @@ function updatePassword($id, $newPassword, $password, $pdo) {
 
       $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
 
-      $statement = $pdo->prepare('SELECT * FROM Users WHERE id = :id');
+      $statement = $pdo->prepare('SELECT * FROM users WHERE id = :id');
       $statement->bindParam(':id', $id, PDO::PARAM_STR);
       $statement->execute();
 
@@ -122,7 +122,7 @@ function updatePassword($id, $newPassword, $password, $pdo) {
 
           if (password_verify ($password, $user['password'])) {
 
-            $statement = $pdo->prepare("UPDATE Users SET password = :newPassword WHERE id = :id");
+            $statement = $pdo->prepare("UPDATE users SET password = :newPassword WHERE id = :id");
 
             $statement->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
             $statement->bindParam(':id', $id, PDO::PARAM_STR);
@@ -163,7 +163,7 @@ function updateAvatar($avatar, $name, $id, $filetype, $allowed, $dir, $avatarInD
     //Update avatar in database
     $newAvatarInDB = $dir.$id.'.'.$filetype;
 
-    $statement = $pdo->prepare("UPDATE Users SET avatar = :newAvatarInDB WHERE id = :id");
+    $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE id = :id");
     $statement->bindParam(':newAvatarInDB', $newAvatarInDB, PDO::PARAM_STR);
     $statement->bindParam(':id', $id, PDO::PARAM_STR);
     $statement->execute();
@@ -174,5 +174,20 @@ function updateAvatar($avatar, $name, $id, $filetype, $allowed, $dir, $avatarInD
     $_SESSION['avatar'] = $newAvatarInDB;
 
   }
+
+}
+
+
+function updateBio($newBio, $id, $pdo){
+
+  $statement = $pdo->prepare("UPDATE users SET bio = :newBio WHERE id = :id");
+  $statement->bindParam(':newBio', $newBio, PDO::PARAM_STR);
+  $statement->bindParam(':id', $id, PDO::PARAM_STR);
+  $statement->execute();
+
+  $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+  $_SESSION['message_updateBio'] = "Your bio was successfully updated!";
+  $_SESSION['bio'] = $newBio;
 
 }

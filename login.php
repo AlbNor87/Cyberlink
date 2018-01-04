@@ -47,6 +47,9 @@
         </div><!-- /form-group -->
 
         <button type="submit" class="btn btn-primary">Register</button>
+        <?php if (isset($_SESSION['message_register'])): ?>
+          <p><?php echo $_SESSION['message_register']; ?></p>
+        <?php endif; ?>
     </form>
 </article>
 

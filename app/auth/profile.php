@@ -64,7 +64,7 @@ if (isset($_FILES['avatar'])) {
     //Update avatar in database
     $newAvatarInDB = $dir.$id.'.'.$filetype;
 
-    $statement = $pdo->prepare("UPDATE Users SET avatar = :newAvatarInDB WHERE id = :id");
+    $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE id = :id");
     $statement->bindParam(':newAvatarInDB', $newAvatarInDB, PDO::PARAM_STR);
     $statement->bindParam(':id', $id, PDO::PARAM_STR);
     $statement->execute();
@@ -85,17 +85,7 @@ if (isset($_POST['bio'])) {
     $id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
     $newBio = filter_var($_POST['bio'], FILTER_SANITIZE_STRING);
 
-    // updateBio($bio, $id, $pdo);
-
-    $statement = $pdo->prepare("UPDATE Users SET bio = :newBio WHERE id = :id");
-    $statement->bindParam(':newBio', $newBio, PDO::PARAM_STR);
-    $statement->bindParam(':id', $id, PDO::PARAM_STR);
-    $statement->execute();
-
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
-
-    $_SESSION['message_updateBio'] = "Your bio was successfully updated!";
-    $_SESSION['bio'] = $newBio;
+    updateBio($newBio, $id, $pdo);
 
     header("Location:/profile.php");
 
