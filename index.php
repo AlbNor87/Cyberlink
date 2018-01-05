@@ -21,7 +21,9 @@
 
 <?php endif; ?>
 
-<?php require __DIR__.'/app/posts/posts.php'; ?>
+<a href="/post.php">Submit a new post!</a>
+
+<?php require __DIR__.'/app/posts/get.php'; ?>
 
 <div class="feed">
 
@@ -73,6 +75,17 @@
 
   </div><!-- /post-container -->
    <?php endforeach; ?>
+
+   <?php if (isset($_SESSION['what'])): ?>
+     <p><?php echo $_SESSION['what']; ?></p>
+   <?php endif; ?>
+
+
+   <?php if (isset($_SESSION['title'])) {
+
+     echo $_SESSION['formTitle'];
+
+   }?>
 
 </div><!-- /feed -->
 
