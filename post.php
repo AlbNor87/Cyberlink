@@ -28,6 +28,9 @@
         <label for="image">Image</label><br>
         <input type="file" name="image" accept=".png, .jpeg, .jpg">
         <br>
+        <?php if (isset($_SESSION['message_postImage'])): ?>
+          <p><?php echo $_SESSION['message_postImage']; ?></p>
+        <?php endif; ?>
       </div><!-- /form-group -->
 
       <br>
@@ -41,6 +44,10 @@
           <input type="submit">
           <?php if (isset($_SESSION['message_post'])): ?>
             <p><?php echo $_SESSION['message_post']; ?></p>
+          <?php endif; ?>
+
+          <?php if (isset($_SESSION['vad'])): ?>
+            <p><?php echo $_SESSION['vad']; ?></p>
           <?php endif; ?>
         </div><!-- /form-group -->
 

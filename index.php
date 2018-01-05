@@ -59,8 +59,7 @@
         <div class="post-footer">
 
           <div class="author">
-            <p>Submitted on <?php echo date('Y-m-d', $post['date']); ?> by <?php echo $post['author']; ?></p>
-
+            <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['author']; ?></p>
           </div><!-- /author -->
 
           <div class="likes">
@@ -75,17 +74,6 @@
 
   </div><!-- /post-container -->
    <?php endforeach; ?>
-
-   <?php if (isset($_SESSION['what'])): ?>
-     <p><?php echo $_SESSION['what']; ?></p>
-   <?php endif; ?>
-
-
-   <?php if (isset($_SESSION['title'])) {
-
-     echo $_SESSION['formTitle'];
-
-   }?>
 
 </div><!-- /feed -->
 
