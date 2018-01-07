@@ -12,14 +12,13 @@ if (isset($_POST['title'])) {
     $timeOfSub = time();
     $image = 'img/post.jpg';
 
-    // if (isset($_FILES['image'])) {
-    //   $_SESSION['vad'] = $_FILES['image'];
-    //   header("Location:/post.php");
-    //   exit;
-    // }
+
+    $_SESSION['formTitle'] = $title;
+    $_SESSION['formUrl'] = $url;
+    $_SESSION['formDescription'] = $description;
 
 
-    if (isset($_FILES['image'])) {
+    if ($_FILES['image']['name'] !== "") {
       $image = $_FILES['image'];
       $name = $image['name'];
       $dir = 'uploads/';
@@ -28,19 +27,24 @@ if (isset($_POST['title'])) {
 
       if (!in_array($filetype, $allowed)) {
         $_SESSION['message_postImage'] = "The uploaded file type is not allowed.";
+        header("Location:/post.php");
+        exit;
       }
       elseif ($image["size"] > 3145728) {
         $_SESSION['message_postImage'] = "The uploaded file exceeded the file size limit, please choose an image of a smaller size.";
+        header("Location:/post.php");
+        exit;
       }
       else {
 
         move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$author.$timeOfSub.'.'.$filetype);
 
+        $image = $dir.$author.$timeOfSub.'.'.$filetype;
+
       }
 
-      $image = $dir.$author.$timeOfSub.'.'.$filetype;
-
     }
+
 
     $statement = $pdo->prepare('SELECT COUNT(*) FROM posts WHERE title = :title');
     if (!$statement) {
@@ -67,14 +71,12 @@ if (isset($_POST['title'])) {
       unset($_SESSION['formUrl']);
       unset($_SESSION['formDescription']);
       unset($_SESSION['message_post']);
+      unset($_SESSION['message_postImage']);
 
       header("Location:/index.php");
     }
     else {
 
-        $_SESSION['formTitle'] = $title;
-        $_SESSION['formUrl'] = $url;
-        $_SESSION['formDescription'] = $description;
         $_SESSION['message_post'] = "A post with this exact title already exists, please choose another one!";
         header("Location:/post.php");
         exit;
