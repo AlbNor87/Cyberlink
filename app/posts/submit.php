@@ -5,7 +5,7 @@ declare(strict_types=1);
 require __DIR__.'/../autoload.php';
 
 if (isset($_POST['title'])) {
-    $author = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
+    $author_id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
     $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
     $url = filter_var($_POST['url'], FILTER_SANITIZE_STRING);
     $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
@@ -37,9 +37,9 @@ if (isset($_POST['title'])) {
       }
       else {
 
-        move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$author.$timeOfSub.'.'.$filetype);
+        move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$author_id.$timeOfSub.'.'.$filetype);
 
-        $image = $dir.$author.$timeOfSub.'.'.$filetype;
+        $image = $dir.$author_id.$timeOfSub.'.'.$filetype;
 
       }
 
@@ -58,12 +58,12 @@ if (isset($_POST['title'])) {
 
     if ($titleExists === 0){
 
-      $statement = $pdo->prepare('INSERT INTO posts(title, url, description, image, author, timeOfSub) VALUES(:title, :url, :description, :image, :author, :timeOfSub)');
+      $statement = $pdo->prepare('INSERT INTO posts(title, url, description, image, author_id, timeOfSub) VALUES(:title, :url, :description, :image, :author_id, :timeOfSub)');
       $statement->bindParam(':title', $title, PDO::PARAM_STR);
       $statement->bindParam(':url', $url, PDO::PARAM_STR);
       $statement->bindParam(':description', $description, PDO::PARAM_STR);
       $statement->bindParam(':image', $image, PDO::PARAM_STR);
-      $statement->bindParam(':author', $author, PDO::PARAM_STR);
+      $statement->bindParam(':author_id', $author_id, PDO::PARAM_INT);
       $statement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
       $statement->execute();
 

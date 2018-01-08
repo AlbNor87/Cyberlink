@@ -34,6 +34,12 @@
 
     <div class="post">
 
+      <div class="post-votes">
+        <div class="up-vote"><h1>&#8679;</h1></div>
+        <div class="score"><h2><?php echo $post['votes'];?></h2></div>
+        <div class="down-vote"><h1>&#8595;</h1></div>
+      </div>
+
       <div class="post-image">
         <img class="img-responsive" src="<?php echo $post['image'];?>">
       </div>
@@ -59,12 +65,8 @@
         <div class="post-footer">
 
           <div class="author">
-            <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['author']; ?></p>
+            <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?></p>
           </div><!-- /author -->
-
-          <div class="likes">
-            <p><?php echo "Votes: " . $post['votes'];?></p>
-          </div>
 
         </div>
 
