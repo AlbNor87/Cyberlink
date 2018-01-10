@@ -14,7 +14,11 @@
       <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true): ?>
 
         <li class="nav-item">
-            <a href="/profile.php">My Profile</a>
+            <a href="/my_profile.php">My Profile</a>
+        </li><!-- /nav-item -->
+
+        <li class="nav-item">
+            <a href="/my_posts.php">My Posts</a>
         </li><!-- /nav-item -->
 
         <li class="nav-item">

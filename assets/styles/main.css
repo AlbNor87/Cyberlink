@@ -23,6 +23,17 @@ nav {
   flex-direction: row;
 }
 
+.post-rank {
+  background-color: black;
+  color: white;
+  width: 5%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .post-votes {
   background-color: black;
   width: 10%;
@@ -33,30 +44,52 @@ nav {
 
 .up-vote {
   background-color: green;
-  width: 100%;
+  width: auto;
   height: calc(100%/3);
   display: flex;
   justify-content: center;
-
+  align-items: center;
 }
 
-.score {
+.votes {
   background-color: blue;
   color: white;
   text-align: center;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: calc(100%/3);
   display: flex;
 }
 
 .down-vote {
   background-color: red;
-  width: 100%;
   height: calc(100%/3);
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.thumbs {
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3vw;
+  height: 3vw;
+}
+
+.thumbs.up {
+  background-image: url(../../img/thumbs_up.svg);
+}
+
+.thumbs.down {
+  background-image: url(../../img/thumbs_down.svg);
+}
+
+.thumbs:hover {
+  cursor: pointer;
+  width: 3.2vw;
+  height: 3.2vw;
 }
 
 .post-image {
@@ -90,8 +123,13 @@ nav {
 
 .post-footer {
   width: 100%;
-  /* height: 10%; */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
+  font-size: 0.8rem;
+  color: grey;
+}
+
+.author {
+  justify-content: flex-end;
 }

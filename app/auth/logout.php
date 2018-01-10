@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require __DIR__.'/../autoload.php';
 
-session_start();
+// session_start();
 session_destroy();
 
 header("Location:/../../login.php");

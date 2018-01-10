@@ -12,7 +12,7 @@ if (isset($_POST['email'],$_POST['password'])) {
 
     updateEmail($email, $id, $password, $pdo);
 
-    header("Location:/profile.php");
+    header("Location:/my_profile.php");
 
 };
 
@@ -29,7 +29,7 @@ if (isset($_POST['newPassword'],$_POST['password'])) {
 
     }
 
-    header("Location:/profile.php");
+    header("Location:/my_profile.php");
 
 };
 
@@ -76,7 +76,7 @@ if (isset($_FILES['avatar'])) {
 
   }
 
-  header("Location:/profile.php");
+  header("Location:/my_profile.php");
 
 };
 
@@ -87,6 +87,6 @@ if (isset($_POST['bio'])) {
 
     updateBio($newBio, $id, $pdo);
 
-    header("Location:/profile.php");
+    header("Location:/my_profile.php");
 
 };

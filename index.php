@@ -4,7 +4,7 @@
 
   <article>
     <h1>
-      <?php echo "Welcome to ".$config['title']." ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion!"; ?>
+      <?php echo "Welcome to ".$config['title']." ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
     </h1>
   </article>
 
@@ -21,9 +21,7 @@
 
 <?php endif; ?>
 
-<a href="/post.php">Submit a new post!</a>
-
-<?php require __DIR__.'/app/posts/get.php'; ?>
+<?php $postsArray = getPostsAll($pdo);?>
 
 <div class="feed">
 
@@ -32,12 +30,16 @@
 
   <div class="post-container">
 
-    <div class="post">
+    <div class="post" data-id="<?php echo $post['id'];?>" >
+
+      <div class="post-rank">
+        <div class="rank"><h2><?php echo $post['rank'];?></h2></div>
+      </div>
 
       <div class="post-votes">
-        <div class="up-vote"><h1>&#8679;</h1></div>
-        <div class="score"><h2><?php echo $post['votes'];?></h2></div>
-        <div class="down-vote"><h1>&#8595;</h1></div>
+        <div class="up-vote"> <div class="thumbs up"></div> </div>
+        <div class="votes"><h2><?php echo $post['votes'];?></h2></div>
+        <div class="down-vote"><div class="thumbs down"></div></div>
       </div>
 
       <div class="post-image">

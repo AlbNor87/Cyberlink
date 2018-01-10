@@ -1,6 +1,11 @@
 <?php require __DIR__.'/views/header.php'; ?>
 
 <article>
+  <h1>My Profile</h1>
+  <h2>Here you can edit your profile settings!</h2>
+</article>
+
+<article>
 
     <h1>Email</h1>
 
