@@ -193,8 +193,7 @@ function updateBio($newBio, $id, $pdo){
 }
 
 function getPostsAll($pdo) {
-
-  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes, posts.timeOfSub, posts.rank, users.username FROM posts, users WHERE posts.author_id = users.id ORDER BY posts.rank');
+  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.timeOfSub, posts.rank, users.username FROM posts, users WHERE posts.author_id = users.id ORDER BY posts.rank');
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }

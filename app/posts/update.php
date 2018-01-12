@@ -52,7 +52,7 @@ if (isset($_POST['title'])) {
         }
         else {
 
-          if ($image !== $oldImage){
+          if ($image !== $oldImage && $image !== 'img/post.jpg'){
           unlink( __DIR__.'/..'.'/..'.'/'.$oldImage );
           }
 
@@ -67,7 +67,7 @@ if (isset($_POST['title'])) {
       }
 
       $statement = $pdo->prepare('UPDATE posts SET title = :title, url = :url, description = :description, image = :image2, author_id = :author_id, timeOfSub = :timeOfSub WHERE id = :postId');
-      $statement->bindParam(':postId', $postId, PDO::PARAM_STR);
+      $statement->bindParam(':postId', $postId, PDO::PARAM_INT);
       $statement->bindParam(':title', $title, PDO::PARAM_STR);
       $statement->bindParam(':url', $url, PDO::PARAM_STR);
       $statement->bindParam(':description', $description, PDO::PARAM_STR);
