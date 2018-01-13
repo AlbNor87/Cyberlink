@@ -2,8 +2,11 @@
 
 require __DIR__.'/views/header.php';
 $postsArray = getPostsAll($pdo);
-
 // die(var_dump($postsArray));
+
+// $myPostsArray = getPosts($pdo);
+// die(var_dump($myPostsArray));
+
 
 ?>
 
@@ -28,9 +31,6 @@ $postsArray = getPostsAll($pdo);
 
 <?php endif; ?>
 
-<a href="/vote.php?upVote=61"><h2>Send post id</h2></a>
-
-
 <div class="feed">
 
 <?php foreach ($postsArray as $post): ?>
@@ -49,7 +49,7 @@ $postsArray = getPostsAll($pdo);
           <div class="thumbs up" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['id'];?>" data-vote-dir="up">
           </div>
         </div>
-        <div class="votes" data-display-vote-id="<?php echo $post['id'];?>"><h2><?php echo $post['total'];?></h2></div>
+        <div class="votes" data-display-vote-id="<?php echo $post['id'];?>"><h2><?php echo $post['sum'];?></h2></div>
 
         <div class="down-vote"><div class="thumbs down" data-post-id="<?php echo $post['id'];?>" data-vote-dir="down"></div></div>
       </div>
@@ -109,12 +109,11 @@ $postsArray = getPostsAll($pdo);
     const voteDir = event.target.dataset.voteDir;
     const userId = event.target.dataset.userId;
 
+    console.log(postId);
+    console.log(voteDir);
     console.log(userId);
 
-
-
     const data = `postId=${postId}&voteDir=${voteDir}&userId=${userId}`;
-
     const url = "vote.php";
 
     fetch(url, {

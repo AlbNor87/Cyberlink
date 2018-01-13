@@ -193,12 +193,53 @@ function updateBio($newBio, $id, $pdo){
 }
 
 function getPostsAll($pdo) {
-  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.timeOfSub, posts.rank, users.username FROM posts, users WHERE posts.author_id = users.id ORDER BY posts.rank');
+
+  // $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.author_id = users.id GROUP BY posts.id ORDER BY posts.rank");
+
+  $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.author_id = users.user_id GROUP BY posts.id ORDER BY posts.rank");
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
   $postsStatement->execute();
   return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+function getPosts($pdo) {
+
+  // $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.author_id = users.id GROUP BY posts.id ORDER BY posts.rank");
+
+  $postsStatement = $pdo->prepare("SELECT * FROM posts");
+  if (!$postsStatement) {
+    die(var_dump($pdo->errorInfo()));
+    }
+  $postsStatement->execute();
+  return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+
+// function getPostsAll($pdo) {
+//
+//   $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.timeOfSub, posts.rank, users.username FROM posts, users WHERE posts.author_id = users.id ORDER BY posts.rank');
+//   if (!$postsStatement) {
+//     die(var_dump($pdo->errorInfo()));
+//     }
+//   $postsStatement->execute();
+//   return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
+//
+// }
+
+function getSum($pdo, $postId) {
+
+  $votesStatement = $pdo->prepare('SELECT SUM(vote) FROM votes WHERE id = :postId');
+
+  $statement->bindParam(':postId', $postId, PDO::PARAM_INT);
+  if (!$votesStatement) {
+    die(var_dump($pdo->errorInfo()));
+    }
+  $votesStatement->execute();
+  return $votesStatement->fetchAll(PDO::FETCH_ASSOC);
 
 }
 
