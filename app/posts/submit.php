@@ -5,7 +5,7 @@ declare(strict_types=1);
 require __DIR__.'/../autoload.php';
 
 if (isset($_POST['title'])) {
-    $author_id = filter_var($_SESSION['user_id'], FILTER_SANITIZE_STRING);
+    $user_id = filter_var($_SESSION['user_id'], FILTER_SANITIZE_STRING);
     $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
     $url = filter_var($_POST['url'], FILTER_SANITIZE_STRING);
     $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
@@ -49,20 +49,20 @@ if (isset($_POST['title'])) {
         }
         else {
 
-          move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$author_id.$timeOfSub.'.'.$filetype);
+          move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$user_id.$timeOfSub.'.'.$filetype);
 
-          $image = $dir.$author_id.$timeOfSub.'.'.$filetype;
+          $image = $dir.$user_id.$timeOfSub.'.'.$filetype;
 
         }
 
       }
 
-      $statement = $pdo->prepare('INSERT INTO posts(title, url, description, image, author_id, timeOfSub) VALUES(:title, :url, :description, :image, :author_id, :timeOfSub)');
+      $statement = $pdo->prepare('INSERT INTO posts(title, url, description, image, user_id, timeOfSub) VALUES(:title, :url, :description, :image, :user_id, :timeOfSub)');
       $statement->bindParam(':title', $title, PDO::PARAM_STR);
       $statement->bindParam(':url', $url, PDO::PARAM_STR);
       $statement->bindParam(':description', $description, PDO::PARAM_STR);
       $statement->bindParam(':image', $image, PDO::PARAM_STR);
-      $statement->bindParam(':author_id', $author_id, PDO::PARAM_INT);
+      $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
       $statement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
       $statement->execute();
 
@@ -76,7 +76,7 @@ if (isset($_POST['title'])) {
       //Add a intitial vote value of zero (otherwise the SQL statment in getPostsAll appearently would not work)
 
       $voteStatement = $pdo->prepare('INSERT INTO votes(user_id, post_id, vote) VALUES(:user_id, :post_id, :vote)');
-      $voteStatement->bindParam(':user_id', $author_id, PDO::PARAM_INT);
+      $voteStatement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
       $voteStatement->bindParam(':post_id', $postIdInDB, PDO::PARAM_INT);
       $voteStatement->bindParam(':vote', $vote, PDO::PARAM_INT);
       $voteStatement->execute();

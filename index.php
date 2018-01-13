@@ -2,7 +2,8 @@
 
 require __DIR__.'/views/header.php';
 $postsArray = getPostsAll($pdo);
-// die(var_dump($postsArray));
+// $votesArray = getVotesOnPostsByUserId($pdo, $_SESSION['userId'])
+die(var_dump($postsArray));
 
 // $myPostsArray = getPosts($pdo);
 // die(var_dump($myPostsArray));
@@ -46,12 +47,13 @@ $postsArray = getPostsAll($pdo);
 
       <div class="post-votes">
         <div class="up-vote">
-          <div class="thumbs up" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="up">
-          </div>
+          <div class="thumbs up" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="1"></div>
         </div>
-        <div class="votes" data-display-vote-id="<?php echo $post['id'];?>"><h2><?php echo $post['sum'];?></h2></div>
+        <div class="votes" data-vote-display-id="<?php echo $post['id'];?>"><p><?php echo $post['sum'];?><p></div>
 
-        <div class="down-vote"><div class="thumbs down" data-post-id="<?php echo $post['id'];?>" data-vote-dir="down"></div></div>
+        <div class="down-vote">
+          <div class="thumbs down" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="-1"></div>
+        </div>
       </div>
 
       <div class="post-image">
@@ -125,11 +127,15 @@ $postsArray = getPostsAll($pdo);
             .then((res) => res.json())
             .then((data) =>  {
 
-              // const display = document.querySelector('.votes');
-              // const
-              // = document.querySelector(`.votes[data-id="${}"]`)
 
+              const display = document.querySelector(`[data-vote-display-id="${postId}"]`);
+
+              display.innerText = data['sum(vote)'];
+
+              console.log(display);
               console.log(data)
+              console.log(data['sum(vote)'])
+
             })
             .catch(console.error)
 
