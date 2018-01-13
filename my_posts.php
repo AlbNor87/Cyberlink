@@ -2,7 +2,7 @@
 
 require __DIR__.'/views/header.php';
 
-$postsArray = getPostsByUserId($pdo, $_SESSION['id']);
+$postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
 
 ?>
 

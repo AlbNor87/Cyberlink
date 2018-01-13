@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// require __DIR__.'/autoload.php';
+
 if (!function_exists('redirect')) {
     /**
      * Redirect the user to given path.
@@ -55,7 +57,7 @@ function login($email, $password, $pdo) {
 
     if (password_verify ($password, $user['password'])) {
 
-      $_SESSION['id'] = $user['id'];
+      $_SESSION['user_id'] = $user['user_id'];
       $_SESSION['username'] = $user['username'];
       $_SESSION['email'] = $user['email'];
       $_SESSION['authenticated'] = true;
@@ -79,19 +81,19 @@ function login($email, $password, $pdo) {
 
 
 
-function updateEmail($email, $id, $password, $pdo) {
+function updateEmail($email, $user_id, $password, $pdo) {
 
-    $statement = $pdo->prepare('SELECT * FROM users WHERE id = :id');
-    $statement->bindParam(':id', $id, PDO::PARAM_STR);
+    $statement = $pdo->prepare('SELECT * FROM users WHERE user_id = :user_id');
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $statement->execute();
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
         if (password_verify ($password, $user['password'])) {
 
-          $statement = $pdo->prepare("UPDATE users SET email = :email WHERE id = :id");
+          $statement = $pdo->prepare("UPDATE users SET email = :email WHERE user_id = :user_id");
 
-          $statement->bindParam(':id', $id, PDO::PARAM_STR);
+          $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
           $statement->bindParam(':email', $email, PDO::PARAM_STR);
           $statement->execute();
 
@@ -110,22 +112,22 @@ function updateEmail($email, $id, $password, $pdo) {
 
 
 
-function updatePassword($id, $newPassword, $password, $pdo) {
+function updatePassword($user_id, $newPassword, $password, $pdo) {
 
   $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
 
-  $statement = $pdo->prepare('SELECT * FROM users WHERE id = :id');
-  $statement->bindParam(':id', $id, PDO::PARAM_STR);
+  $statement = $pdo->prepare('SELECT * FROM users WHERE user_id = :user_id');
+  $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
   $statement->execute();
 
   $user = $statement->fetch(PDO::FETCH_ASSOC);
 
       if (password_verify ($password, $user['password'])) {
 
-        $statement = $pdo->prepare("UPDATE users SET password = :newPassword WHERE id = :id");
+        $statement = $pdo->prepare("UPDATE users SET password = :newPassword WHERE user_id = :user_id");
 
         $statement->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
-        $statement->bindParam(':id', $id, PDO::PARAM_STR);
+        $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
         $statement->execute();
 
         $_SESSION['message_updatePassword'] = "Your password was sucessfully updated!";
@@ -142,7 +144,7 @@ function updatePassword($id, $newPassword, $password, $pdo) {
 
 
 
-// function updateAvatar($avatar, $name, $id, $filetype, $allowed, $dir, $avatarInDB, $pdo) {
+// function updateAvatar($avatar, $name, $user_id, $filetype, $allowed, $dir, $avatarInDB, $pdo) {
 //
 //   //Upload new avatar
 //   if (!in_array($filetype, $allowed)) {
@@ -158,14 +160,14 @@ function updatePassword($id, $newPassword, $password, $pdo) {
 //     unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
 //     }
 //
-//     move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$id.'.'.$filetype);
+//     move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$user_id.'.'.$filetype);
 //
 //     //Update avatar in database
-//     $newAvatarInDB = $dir.$id.'.'.$filetype;
+//     $newAvatarInDB = $dir.$user_id.'.'.$filetype;
 //
-//     $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE id = :id");
+//     $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE user_id = :id");
 //     $statement->bindParam(':newAvatarInDB', $newAvatarInDB, PDO::PARAM_STR);
-//     $statement->bindParam(':id', $id, PDO::PARAM_STR);
+//     $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
 //     $statement->execute();
 //
 //     $user = $statement->fetch(PDO::FETCH_ASSOC);
@@ -178,11 +180,11 @@ function updatePassword($id, $newPassword, $password, $pdo) {
 // }
 
 
-function updateBio($newBio, $id, $pdo){
+function updateBio($newBio, $user_id, $pdo){
 
-  $statement = $pdo->prepare("UPDATE users SET bio = :newBio WHERE id = :id");
+  $statement = $pdo->prepare("UPDATE users SET bio = :newBio WHERE user_id = :user_id");
   $statement->bindParam(':newBio', $newBio, PDO::PARAM_STR);
-  $statement->bindParam(':id', $id, PDO::PARAM_STR);
+  $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
   $statement->execute();
 
   $user = $statement->fetch(PDO::FETCH_ASSOC);

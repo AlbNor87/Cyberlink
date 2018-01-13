@@ -5,21 +5,18 @@ declare(strict_types=1);
 require __DIR__.'/../autoload.php';
 
 if (isset($_POST['title'])) {
-    $author_id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
+    $author_id = filter_var($_SESSION['user_id'], FILTER_SANITIZE_STRING);
     $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
     $url = filter_var($_POST['url'], FILTER_SANITIZE_STRING);
     $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
     $timeOfSub = time();
-    $image = 'img/post.jpg';
+    $image = 'img/post.png';
+    $vote = 0;
 
 
     $_SESSION['formTitle'] = $title;
     $_SESSION['formUrl'] = $url;
     $_SESSION['formDescription'] = $description;
-
-
-
-
 
     $statement = $pdo->prepare('SELECT COUNT(*) FROM posts WHERE title = :title');
     if (!$statement) {
@@ -68,6 +65,21 @@ if (isset($_POST['title'])) {
       $statement->bindParam(':author_id', $author_id, PDO::PARAM_INT);
       $statement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
       $statement->execute();
+
+      $getStatement = $pdo->prepare('SELECT * FROM posts WHERE timeOfSub = :timeOfSub');
+      $getStatement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
+      $getStatement->execute();
+
+      $getPostIdInDB = $getStatement->fetch(PDO::FETCH_ASSOC);
+      $postIdInDB = $getPostIdInDB['id'];
+
+      //Add a intitial vote value of zero (otherwise the SQL statment in getPostsAll appearently would not work)
+
+      $voteStatement = $pdo->prepare('INSERT INTO votes(user_id, post_id, vote) VALUES(:user_id, :post_id, :vote)');
+      $voteStatement->bindParam(':user_id', $author_id, PDO::PARAM_INT);
+      $voteStatement->bindParam(':post_id', $postIdInDB, PDO::PARAM_INT);
+      $voteStatement->bindParam(':vote', $vote, PDO::PARAM_INT);
+      $voteStatement->execute();
 
       unset($_SESSION['formTitle']);
       unset($_SESSION['formUrl']);

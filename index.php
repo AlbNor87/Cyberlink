@@ -46,7 +46,7 @@ $postsArray = getPostsAll($pdo);
 
       <div class="post-votes">
         <div class="up-vote">
-          <div class="thumbs up" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['id'];?>" data-vote-dir="up">
+          <div class="thumbs up" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="up">
           </div>
         </div>
         <div class="votes" data-display-vote-id="<?php echo $post['id'];?>"><h2><?php echo $post['sum'];?></h2></div>

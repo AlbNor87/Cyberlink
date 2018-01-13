@@ -9,7 +9,7 @@ if (isset($_POST['title'])) {
   $postsArray = getPostsByPostId($pdo, $postId);
   $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
   $oldTitle = $postsArray['title'];
-  $author_id = filter_var($_SESSION['id'], FILTER_SANITIZE_STRING);
+  $author_id = filter_var($_SESSION['user_id'], FILTER_SANITIZE_STRING);
   $url = filter_var($_POST['url'], FILTER_SANITIZE_STRING);
   $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
   $timeOfSub = time();

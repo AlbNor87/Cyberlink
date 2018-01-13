@@ -22,7 +22,7 @@ if (isset($_POST['postId'])) {
   $statement->execute();
   $votesOnPost = $statement->fetch(PDO::FETCH_ASSOC);
 
-  // die(var_dump($votesOnPost));
+  die(var_dump($votesOnPost));
 
   $statement = $pdo->prepare("INSERT INTO votes(user_id, post_id, vote) VALUES (:userId, :postId, :vote)");
   if (!$statement) {
