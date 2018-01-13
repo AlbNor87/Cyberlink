@@ -198,10 +198,34 @@ function getPostsAll($pdo) {
 
   // $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.id GROUP BY posts.id ORDER BY posts.rank");
 
+// (SELECT user_id FROM votes WHERE votes.post_id = posts.id)
+
   $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY posts.rank");
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
+  $postsStatement->execute();
+  return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+function getPostsAllWithUserId($pdo, $userId) {
+
+  // die(var_dump($userId));
+
+  // $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.id GROUP BY posts.id ORDER BY posts.rank");
+
+// (SELECT user_id FROM votes WHERE votes.post_id = posts.id)
+// (SELECT vote FROM votes WHERE votes.user_id = :userId)
+
+// (SELECT vote FROM votes WHERE votes.user_id = :userId) AS userVote
+// SELECT votes.vote WHERE votes.user_id = :userId,
+
+$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY posts.rank");
+  if (!$postsStatement) {
+    die(var_dump($pdo->errorInfo()));
+    }
+  $postsStatement->bindParam(':userId', $userId, PDO::PARAM_STR);
   $postsStatement->execute();
   return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
 

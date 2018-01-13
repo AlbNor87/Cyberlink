@@ -50,6 +50,14 @@ nav {
   justify-content: center;
   align-items: center;
 }
+.up-vote.active {
+  background-color: lightgreen;
+  width: auto;
+  height: calc(100%/3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .votes {
   background-color: blue;
@@ -63,6 +71,14 @@ nav {
 
 .down-vote {
   background-color: red;
+  height: calc(100%/3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.down-vote.active {
+  background-color: pink;
+  width: auto;
   height: calc(100%/3);
   display: flex;
   justify-content: center;

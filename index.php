@@ -1,9 +1,10 @@
 <?php
 
 require __DIR__.'/views/header.php';
-$postsArray = getPostsAll($pdo);
-// $votesArray = getVotesOnPostsByUserId($pdo, $_SESSION['userId'])
-die(var_dump($postsArray));
+// $postsArray = getPostsAll($pdo);
+$postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
+
+// die(var_dump($postsArray));
 
 // $myPostsArray = getPosts($pdo);
 // die(var_dump($myPostsArray));
@@ -46,12 +47,12 @@ die(var_dump($postsArray));
       </div>
 
       <div class="post-votes">
-        <div class="up-vote">
+        <div class="up-vote<?php if ($post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" >
           <div class="thumbs up" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="1"></div>
         </div>
         <div class="votes" data-vote-display-id="<?php echo $post['id'];?>"><p><?php echo $post['sum'];?><p></div>
 
-        <div class="down-vote">
+        <div class="down-vote <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>">
           <div class="thumbs down" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="-1"></div>
         </div>
       </div>
@@ -111,9 +112,9 @@ die(var_dump($postsArray));
     const voteDir = event.target.dataset.voteDir;
     const userId = event.target.dataset.userId;
 
-    console.log(postId);
-    console.log(voteDir);
-    console.log(userId);
+    // console.log(postId);
+    // console.log(voteDir);
+    // console.log(userId);
 
     const data = `postId=${postId}&voteDir=${voteDir}&userId=${userId}`;
     const url = "vote.php";
@@ -129,12 +130,79 @@ die(var_dump($postsArray));
 
 
               const display = document.querySelector(`[data-vote-display-id="${postId}"]`);
+              const liked = document.querySelector(`[data-liked="${postId}"]`);
+              const unliked = document.querySelector(`[data-unliked="${postId}"]`);
 
               display.innerText = data['sum(vote)'];
 
-              console.log(display);
-              console.log(data)
-              console.log(data['sum(vote)'])
+              if (voteDir === "-1" && !liked.classList.contains("active") && !unliked.classList.contains("active")) {
+
+                unliked.classList.add("active");
+
+              } else if (voteDir === "-1" && liked.classList.contains("active") && !unliked.classList.contains("active")) {
+
+                liked.classList.remove("active");
+                unliked.classList.add("active");
+
+              } else if (voteDir === "-1" && !liked.classList.contains("active") && unliked.classList.contains("active")) {
+
+                unliked.classList.remove("active");
+
+              } else if (voteDir === "1" && !liked.classList.contains("active") && unliked.classList.contains("active")) {
+
+                unliked.classList.remove("active");
+                liked.classList.add("active");
+
+              } else if (voteDir === "1" && liked.classList.contains("active") && !unliked.classList.contains("active")) {
+
+              liked.classList.remove("active");
+
+              } else if (voteDir === "1" && !liked.classList.contains("active") && !unliked.classList.contains("active")) {
+
+              liked.classList.add("active");
+
+              }
+
+
+
+              // if (unliked.classList.contains("active") && voteDir === "-1") {
+              //
+              //   unliked.classList.remove("active");
+              //
+              // } else if (liked.classList.contains("active") && voteDir === "-1") {
+              //
+              //   liked.classList.remove("active");
+              //   unliked.classList.add("active");
+              //
+              // } else if (liked.classList.contains("active") && voteDir === "1") {
+              //
+              //   liked.classList.remove("active");
+              //
+              // } else if (unliked.classList.contains("active") && voteDir === "1") {
+              //
+              //   unliked.classList.remove("active");
+              //   liked.classList.add("active");
+              //
+              // }
+
+              // if (liked.classList.contains("active")) {
+              //
+              //   liked.classList.remove("active");
+              //
+              // } else {
+              //
+              //   liked.classList.add("active");
+              //
+              // }
+
+
+              // liked.classList.add("active");
+              // unliked.classList.add("active");
+
+              // console.log(display);
+              // console.log(data);
+              console.log(voteDir);
+              // console.log(data['sum(vote)']);
 
             })
             .catch(console.error)
