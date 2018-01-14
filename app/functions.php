@@ -180,6 +180,7 @@ function updatePassword($user_id, $newPassword, $password, $pdo) {
 // }
 
 
+
 function updateBio($newBio, $user_id, $pdo){
 
   $statement = $pdo->prepare("UPDATE users SET bio = :newBio WHERE user_id = :user_id");
@@ -194,11 +195,9 @@ function updateBio($newBio, $user_id, $pdo){
 
 }
 
+
+
 function getPostsAll($pdo) {
-
-  // $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.id GROUP BY posts.id ORDER BY posts.rank");
-
-// (SELECT user_id FROM votes WHERE votes.post_id = posts.id)
 
   $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY posts.rank");
   if (!$postsStatement) {
@@ -209,19 +208,11 @@ function getPostsAll($pdo) {
 
 }
 
+
+
 function getPostsAllWithUserId($pdo, $userId) {
 
-  // die(var_dump($userId));
-
-  // $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.id GROUP BY posts.id ORDER BY posts.rank");
-
-// (SELECT user_id FROM votes WHERE votes.post_id = posts.id)
-// (SELECT vote FROM votes WHERE votes.user_id = :userId)
-
-// (SELECT vote FROM votes WHERE votes.user_id = :userId) AS userVote
-// SELECT votes.vote WHERE votes.user_id = :userId,
-
-$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY posts.rank");
+$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY sum");
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
@@ -231,18 +222,7 @@ $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(v
 
 }
 
-function getPosts($pdo) {
 
-  // $postsStatement = $pdo->prepare("SELECT posts.*, users.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.id GROUP BY posts.id ORDER BY posts.rank");
-
-  $postsStatement = $pdo->prepare("SELECT * FROM posts");
-  if (!$postsStatement) {
-    die(var_dump($pdo->errorInfo()));
-    }
-  $postsStatement->execute();
-  return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
-
-}
 
 function getPostsByUserId($pdo, $userId) {
 
@@ -258,6 +238,8 @@ function getPostsByUserId($pdo, $userId) {
 
 }
 
+
+
 function getPostsByPostId($pdo, $postId) {
 
   $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, posts.rank, users.username FROM posts JOIN users WHERE posts.user_id = users.id AND posts.id = :postId ORDER BY posts.rank');
@@ -271,17 +253,3 @@ function getPostsByPostId($pdo, $postId) {
   return $postsStatement->fetch(PDO::FETCH_ASSOC);
 
 }
-
-// function getVotesByUserId($pdo, $userId) {
-//
-//   $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, posts.rank, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.user_id = :userId ORDER BY posts.rank');
-//   if (!$postsStatement) {
-//     die(var_dump($pdo->errorInfo()));
-//     }
-//
-//   $postsStatement->bindParam(':userId', $userId, PDO::PARAM_STR);
-//
-//   $postsStatement->execute();
-//   return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
-//
-// }

@@ -2,8 +2,17 @@
 
 require __DIR__.'/views/header.php';
 // $postsArray = getPostsAll($pdo);
+
+if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true){
+$userId = $_SESSION['user_id'];
+
 $postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
 
+} else {
+
+$postsArray = getPostsAll($pdo);
+
+}
 // die(var_dump($postsArray));
 
 // $myPostsArray = getPosts($pdo);
@@ -35,7 +44,8 @@ $postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
 
 <div class="feed">
 
-<?php foreach ($postsArray as $post): ?>
+<?php $rank = 1; foreach ($postsArray as $post): ?>
+
 
 
   <div class="post-container">
@@ -43,19 +53,28 @@ $postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
     <div class="post" data-postId="<?php echo $post['id'];?>" >
 
       <div class="post-rank">
-        <div class="rank"><h2><?php echo $post['rank'];?></h2></div>
+        <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
       </div>
+
 
       <div class="post-votes">
-        <div class="up-vote<?php if ($post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" >
-          <div class="thumbs up" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="1"></div>
-        </div>
+        <div class="up-vote" >
+
+          <div class="thumbs up <?php if (isset($post['userVote']) && $post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if(isset($_SESSION['user_id'])){ echo $_SESSION['user_id'];}?>" data-vote-dir="1"></div>
+
+        </div><!-- /up-vote -->
+
+
+
         <div class="votes" data-vote-display-id="<?php echo $post['id'];?>"><p><?php echo $post['sum'];?><p></div>
 
-        <div class="down-vote <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>">
-          <div class="thumbs down" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $_SESSION['user_id'];?>" data-vote-dir="-1"></div>
+
+
+        <div class="down-vote">
+          <div class="thumbs down <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if(isset($_SESSION['user_id'])){ echo $_SESSION['user_id'];}?>" data-vote-dir="-1"></div>
         </div>
       </div>
+
 
       <div class="post-image">
         <img class="img-responsive" src="<?php echo $post['image'];?>">
@@ -112,9 +131,7 @@ $postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
     const voteDir = event.target.dataset.voteDir;
     const userId = event.target.dataset.userId;
 
-    // console.log(postId);
-    // console.log(voteDir);
-    // console.log(userId);
+    if (userId){
 
     const data = `postId=${postId}&voteDir=${voteDir}&userId=${userId}`;
     const url = "vote.php";
@@ -163,50 +180,21 @@ $postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
 
               }
 
-
-
-              // if (unliked.classList.contains("active") && voteDir === "-1") {
-              //
-              //   unliked.classList.remove("active");
-              //
-              // } else if (liked.classList.contains("active") && voteDir === "-1") {
-              //
-              //   liked.classList.remove("active");
-              //   unliked.classList.add("active");
-              //
-              // } else if (liked.classList.contains("active") && voteDir === "1") {
-              //
-              //   liked.classList.remove("active");
-              //
-              // } else if (unliked.classList.contains("active") && voteDir === "1") {
-              //
-              //   unliked.classList.remove("active");
-              //   liked.classList.add("active");
-              //
-              // }
-
-              // if (liked.classList.contains("active")) {
-              //
-              //   liked.classList.remove("active");
-              //
-              // } else {
-              //
-              //   liked.classList.add("active");
-              //
-              // }
-
-
-              // liked.classList.add("active");
-              // unliked.classList.add("active");
-
-              // console.log(display);
-              // console.log(data);
               console.log(voteDir);
               // console.log(data['sum(vote)']);
 
             })
             .catch(console.error)
 
+          } else {
+
+            if (confirm('You have to be logged in to participate in the voting. Press OK if you want to proceed to the login page where you can also sign up for a free account if you have not already!')) {
+              window.location.href = "login.php";
+              } else {
+                // Do nothing!
+              }
+
+            }
           }
 
 

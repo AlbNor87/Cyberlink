@@ -35,7 +35,6 @@ nav {
 }
 
 .post-votes {
-  background-color: black;
   width: 10%;
   height: auto;
   display: flex;
@@ -43,15 +42,6 @@ nav {
 }
 
 .up-vote {
-  background-color: green;
-  width: auto;
-  height: calc(100%/3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.up-vote.active {
-  background-color: lightgreen;
   width: auto;
   height: calc(100%/3);
   display: flex;
@@ -60,8 +50,6 @@ nav {
 }
 
 .votes {
-  background-color: blue;
-  color: white;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -70,15 +58,6 @@ nav {
 }
 
 .down-vote {
-  background-color: red;
-  height: calc(100%/3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.down-vote.active {
-  background-color: pink;
-  width: auto;
   height: calc(100%/3);
   display: flex;
   justify-content: center;
@@ -98,8 +77,16 @@ nav {
   background-image: url(../../img/thumbs_up.svg);
 }
 
+.thumbs.up.active {
+  background-image: url(../../img/thumbs_up_active.svg);
+}
+
 .thumbs.down {
   background-image: url(../../img/thumbs_down.svg);
+}
+
+.thumbs.down.active {
+  background-image: url(../../img/thumbs_down_active.svg);
 }
 
 .thumbs:hover {

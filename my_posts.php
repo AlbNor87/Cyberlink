@@ -30,7 +30,7 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
 
 <div class="feed">
 
-  <?php foreach ($postsArray as $post): ?>
+  <?php $rank = 1; foreach ($postsArray as $post): ?>
 
 
     <div class="post-container">
@@ -38,12 +38,12 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
       <div class="post" data-id="<?php echo $post['id'];?>" >
 
         <div class="post-rank">
-          <div class="rank"><h2><?php echo $post['rank'];?></h2></div>
+          <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
         </div>
 
         <div class="post-votes">
           <div class="up-vote"><a href="/edit_post.php?id=<?php echo $post['id'];?>"><h2>EDIT</h2></a></div>
-          <div class="votes"><h2><?php echo $post['votes'];?></h2></div>
+          <div class="votes"><h2></h2></div>
           <div class="down-vote"><a href="/app/posts/delete.php?id=<?php echo $post['id'];?>"><h2>DELETE</h2></a></div>
         </div>
 
