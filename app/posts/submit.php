@@ -7,16 +7,20 @@ require __DIR__.'/../autoload.php';
 if (isset($_POST['title'])) {
     $user_id = filter_var($_SESSION['user_id'], FILTER_SANITIZE_STRING);
     $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
-    $url = filter_var($_POST['url'], FILTER_SANITIZE_STRING);
+    $url = filter_var($_POST['url'], FILTER_SANITIZE_URL);
     $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
     $timeOfSub = time();
     $image = 'img/post.svg';
     $vote = 0;
 
-
     $_SESSION['formTitle'] = $title;
     $_SESSION['formUrl'] = $url;
     $_SESSION['formDescription'] = $description;
+
+    if (!filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED)) {
+      $_SESSION['message_postUrl'] = "The url you provided is not a valid url, please try again.";
+      header("Location:/submit_post.php");
+    }
 
     $statement = $pdo->prepare('SELECT COUNT(*) FROM posts WHERE title = :title');
     if (!$statement) {
@@ -86,6 +90,7 @@ if (isset($_POST['title'])) {
       unset($_SESSION['formDescription']);
       unset($_SESSION['message_post']);
       unset($_SESSION['message_postImage']);
+      unset($_SESSION['message_postUrl']);
 
       header("Location:/index.php");
     }

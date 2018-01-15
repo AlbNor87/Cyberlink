@@ -21,102 +21,114 @@ $postsArray = getPostsAll($pdo);
 
 ?>
 
-<?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
+<div class="main-container">
 
-  <article>
-    <h1>
-      <?php echo "Welcome to ".$config['title']." ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
-    </h1>
-  </article>
+  <?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
 
-
-<?php else: ?>
-
-  <article>
-    <h1>
-      <?php echo "Welcome to ".$config['title']." (the worlds best Redditclone), "; ?>
-      <a href="/login.php">login </a>
-      <?php echo "to join the discussion!"; ?>
-    </h1>
-  </article>
-
-<?php endif; ?>
-
-<div class="feed">
+    <article>
+      <h1>
+        <?php echo "Welcome to ".$config['title']." ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
+      </h1>
+    </article>
 
 
+  <?php else: ?>
 
-<?php $rank = 1; foreach ($postsArray as $post): ?>
+    <article>
+      <h1>
+        <?php echo "Welcome to ".$config['title']." (the worlds best Redditclone), "; ?>
+        <a href="/login.php">login </a>
+        <?php echo "to join the discussion!"; ?>
+      </h1>
+    </article>
+
+  <?php endif; ?>
+
+  <div class="feed">
 
 
 
-  <div class="post-container">
-
-    <div class="post" data-postId="<?php echo $post['id'];?>">
-
-      <div class="post-rank">
-        <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
-      </div>
-
-
-      <div class="post-votes">
-        <div class="up-vote" >
-
-          <div class="thumbs up <?php if (isset($post['userVote']) && $post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="1"></div>
-
-        </div><!-- /up-vote -->
+    <?php $rank = 1; foreach ($postsArray as $post): ?>
 
 
 
-        <div class="votes" data-vote-display-id="<?php echo $post['id'];?>"><p><?php echo $post['sum'];?><p></div>
+      <div class="post-container">
 
+        <div class="post" data-postId="<?php echo $post['id'];?>">
 
-
-        <div class="down-vote">
-          <div class="thumbs down <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="-1"></div>
-        </div>
-      </div>
-
-
-      <div class="post-image" style="background-image: url(<?php echo $post['image'];?>)">
-      </div> <!-- /post image -->
-
-      <div class="post-content">
-
-        <div class="post-header">
-
-          <div class="title">
-            <h2><?php echo strtoupper($post['title']); ?></h2>
+          <div class="post-rank">
+            <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
           </div>
 
-        </div>
 
-        <div class="post-body">
+          <div class="post-votes">
+            <div class="up-vote" >
 
+              <div class="thumbs up <?php if (isset($post['userVote']) && $post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="1"></div>
 
-            <p><?php echo $post['description']; ?></p>
-
-
-        </div> <!-- /post-body -->
-
-        <div class="post-footer">
-
-          <div class="author">
-              <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?><img class="userAvatar" src="<?php echo $post['avatar']; ?>" alt="users avatar"></p>
+            </div><!-- /up-vote -->
 
 
-          </div><!-- /author -->
 
-        </div>
+            <div class="votes" data-vote-display-id="<?php echo $post['id'];?>"><p><?php echo $post['sum'];?><p></div>
 
-      </div><!-- /post-content -->
 
-    </div> <!-- /post -->
 
-  </div><!-- /post-container -->
-   <?php endforeach; ?>
+              <div class="down-vote">
+                <div class="thumbs down <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="-1"></div>
+              </div>
+            </div>
 
-</div><!-- /feed -->
+            <a href="<?php echo $post['url']; ?>" class="post-image" style="background-image: url(<?php echo $post['image'];?>)" ></a>
+
+
+            <div class="post-content">
+
+              <div class="post-header">
+
+                <div class="title">
+                  <a href="<?php echo $post['url']; ?>"><h2><?php echo strtoupper($post['title']); ?></h2></a>
+                </div>
+
+              </div>
+
+              <div class="post-body">
+
+
+                <p><?php echo $post['description']; ?></p>
+
+
+              </div> <!-- /post-body -->
+
+              <div class="post-footer">
+
+                <div class="author">
+                  <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?><img class="userAvatar" src="<?php echo $post['avatar']; ?>" alt="users avatar"></p>
+
+
+                </div><!-- /author -->
+
+              </div>
+
+            </div><!-- /post-content -->
+
+          </div> <!-- /post -->
+
+        </div><!-- /post-container -->
+      <?php endforeach; ?>
+
+    </div><!-- /feed -->
+
+  </div><!-- /main-container -->
+
+
+
+
+
+
+
+
+
 
 <script>
 

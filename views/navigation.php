@@ -1,38 +1,41 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><?php echo $config['title']; ?></a>
-
-  <ul class="navbar-nav">
-      <li class="nav-item">
-          <a class="nav-link" href="/index.php">Home</a>
-      </li><!-- /nav-item -->
-
-      <li class="nav-item">
-          <a class="nav-link" href="/about.php">About</a>
-      </li><!-- /nav-item -->
-
-      <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true): ?>
-
-        <li class="nav-item">
-            <a href="/my_profile.php">My Profile</a>
-        </li><!-- /nav-item -->
-
-        <li class="nav-item">
-            <a href="/my_posts.php">My Posts</a>
-        </li><!-- /nav-item -->
-
-        <li class="nav-item">
-            <a href="app/auth/logout.php">Log Out</a>
-        </li><!-- /nav-item -->
-
-      <?php else: ?>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/login.php">Login</a>
-        </li><!-- /nav-item -->
-
-      <?php endif; ?>
+  <!-- <a class="navbar-brand" href="#"><?php echo $config['title']; ?></a> -->
 
 
-  </ul><!-- /navbar-nav -->
+<div class="menu-container">
+
+  <div class="cyberlink-logo">
+    <h1>CYBERLINK</h1>
+  </div>
+
+  <div class="button">
+      <a class="nav-link" href="/index.php">Home</a>
+  </div>
+  <div class="button">
+      <a class="nav-link" href="/about.php">About</a>
+  </div>
+
+    <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true): ?>
+
+  <div class="button">
+        <a href="/my_profile.php">My Profile</a>
+  </div>
+  <div class="button">
+      <a href="/my_posts.php">My Posts</a>
+  </div>
+  <div class="button">
+    <a href="app/auth/logout.php">Log Out</a>
+  </div>
+
+    <?php else: ?>
+
+  <div class="button">
+    <a class="nav-link" href="/login.php">Login</a>
+  </div>
+
+    <?php endif; ?>
+
+</div> <!-- /menu-container -->
+
 </nav><!-- /navbar -->

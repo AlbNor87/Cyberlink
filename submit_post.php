@@ -20,6 +20,11 @@
         <input class="form-control" type="text" name="url" value="<?php
         if (isset($_SESSION['formUrl'])){
             echo $_SESSION['formUrl'];}?>"required>
+
+        <?php if (isset($_SESSION['message_postUrl'])): ?>
+          <p><?php echo $_SESSION['message_postUrl']; ?></p>
+        <?php endif; ?>
+
       </div><!-- /form-group -->
 
       <br>
