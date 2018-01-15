@@ -44,13 +44,15 @@ $postsArray = getPostsAll($pdo);
 
 <div class="feed">
 
+
+
 <?php $rank = 1; foreach ($postsArray as $post): ?>
 
 
 
   <div class="post-container">
 
-    <div class="post" data-postId="<?php echo $post['id'];?>" >
+    <div class="post" data-postId="<?php echo $post['id'];?>">
 
       <div class="post-rank">
         <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
@@ -60,7 +62,7 @@ $postsArray = getPostsAll($pdo);
       <div class="post-votes">
         <div class="up-vote" >
 
-          <div class="thumbs up <?php if (isset($post['userVote']) && $post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if(isset($_SESSION['user_id'])){ echo $_SESSION['user_id'];}?>" data-vote-dir="1"></div>
+          <div class="thumbs up <?php if (isset($post['userVote']) && $post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="1"></div>
 
         </div><!-- /up-vote -->
 
@@ -71,14 +73,13 @@ $postsArray = getPostsAll($pdo);
 
 
         <div class="down-vote">
-          <div class="thumbs down <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if(isset($_SESSION['user_id'])){ echo $_SESSION['user_id'];}?>" data-vote-dir="-1"></div>
+          <div class="thumbs down <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="-1"></div>
         </div>
       </div>
 
 
-      <div class="post-image">
-        <img class="img-responsive" src="<?php echo $post['image'];?>">
-      </div>
+      <div class="post-image" style="background-image: url(<?php echo $post['image'];?>)">
+      </div> <!-- /post image -->
 
       <div class="post-content">
 
@@ -92,16 +93,18 @@ $postsArray = getPostsAll($pdo);
 
         <div class="post-body">
 
-          <div class="content">
-            <?php echo $post['description']; ?>
-          </div>
+
+            <p><?php echo $post['description']; ?></p>
+
 
         </div> <!-- /post-body -->
 
         <div class="post-footer">
 
           <div class="author">
-            <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?></p>
+              <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?><img class="userAvatar" src="<?php echo $post['avatar']; ?>" alt="users avatar"></p>
+
+
           </div><!-- /author -->
 
         </div>
@@ -144,7 +147,6 @@ $postsArray = getPostsAll($pdo);
 
             .then((res) => res.json())
             .then((data) =>  {
-
 
               const display = document.querySelector(`[data-vote-display-id="${postId}"]`);
               const liked = document.querySelector(`[data-liked="${postId}"]`);

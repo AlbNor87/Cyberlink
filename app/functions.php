@@ -242,7 +242,7 @@ function getPostsByUserId($pdo, $userId) {
 
 function getPostsByPostId($pdo, $postId) {
 
-  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, posts.rank, users.username FROM posts JOIN users WHERE posts.user_id = users.id AND posts.id = :postId ORDER BY posts.rank');
+  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, posts.rank, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.id = :postId ORDER BY posts.id');
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }

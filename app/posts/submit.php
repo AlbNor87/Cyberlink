@@ -10,7 +10,7 @@ if (isset($_POST['title'])) {
     $url = filter_var($_POST['url'], FILTER_SANITIZE_STRING);
     $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
     $timeOfSub = time();
-    $image = 'img/post.png';
+    $image = 'img/post.svg';
     $vote = 0;
 
 

@@ -43,6 +43,8 @@ if (isset($_FILES['avatar'])) {
   $dir="uploads/";
   $avatarInDB = $_SESSION['avatar'];
 
+  // die(var_dump($filetype));
+
   // updateAvatar($avatar, $name, $user_id, $filetype, $allowed, $dir, $avatarInDB, $pdo);
 
   //Upload new avatar
@@ -56,7 +58,11 @@ if (isset($_FILES['avatar'])) {
 
     //Remove existing avatar for this specific user
     if ($avatarInDB !== "img/user.png"){
-    unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
+      try {
+          unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
+          } catch (Exception $e) {
+          echo 'Caught exception: ',  $e->getMessage(), "\n";
+          }
     }
 
     move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$user_id.'.'.$filetype);
@@ -64,7 +70,12 @@ if (isset($_FILES['avatar'])) {
     //Update avatar in database
     $newAvatarInDB = $dir.$user_id.'.'.$filetype;
 
-    $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE id = :id");
+    // die(var_dump($newAvatarInDB));
+
+    $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE user_id = :id");
+    if (!$statement) {
+      die(var_dump($pdo->errorInfo()));
+      }
     $statement->bindParam(':newAvatarInDB', $newAvatarInDB, PDO::PARAM_STR);
     $statement->bindParam(':id', $user_id, PDO::PARAM_STR);
     $statement->execute();
