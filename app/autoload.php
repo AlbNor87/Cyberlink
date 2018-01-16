@@ -16,11 +16,14 @@ require __DIR__.'/functions.php';
 
 // Fetch the global configuration array.
 $config = require __DIR__.'/config.php';
+$pdo = new PDO($config['database_path']);
 
-define('DB_HOST', "localhost");
-define('DB_NAME', "cyberlink");
-define('DB_USERNAME', "root");
-define('DB_PASSWORD', "root");
+// define('DB_HOST', "localhost");
+// define('DB_NAME', "cyberlink");
+// define('DB_USERNAME', "root");
+// define('DB_PASSWORD', "root");
 
 // Setup the database connection.
-$pdo = new PDO('mysql:host='.DB_HOST.'; dbname='.DB_NAME, DB_USERNAME, DB_PASSWORD);
+// $pdo = new PDO('mysql:host='.DB_HOST.'; dbname='.DB_NAME, DB_USERNAME, DB_PASSWORD);
+
+// $pdo = new PDO('mysql:host='.DB_HOST.'; dbname='.DB_NAME, DB_USERNAME, DB_PASSWORD);
