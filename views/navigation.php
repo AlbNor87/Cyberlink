@@ -4,31 +4,16 @@
 
 <div class="mobile-menu">
 
-
-
   <nav role="navigation">
 
   <div id="menuToggle">
-    <!--
-    A fake / hidden checkbox is used as click reciever,
-    so you can use the :checked selector on it.
-    -->
+
     <input type="checkbox" />
 
-    <!--
-    Some spans to act as a hamburger.
-
-    They are acting like a real hamburger,
-    not that McDonalds stuff.
-    -->
     <span></span>
     <span></span>
     <span></span>
 
-    <!--
-    Too bad the menu has to be inside of the button
-    but hey, it's pure CSS magic.
-    -->
     <ul id="menu">
       <a href="/index.php"><li>Home</li></a>
       <a href="/about.php"><li>About</li></a>
@@ -46,6 +31,7 @@
       <?php endif; ?>
 
     </ul>
+
   </div>
 
   <div class="cyberlink-logo">
@@ -61,7 +47,7 @@
 
 </nav>
 
-</div>
+</div><!-- /mobile-menu -->
 
 <div class="menu-container-left">
 
@@ -83,6 +69,9 @@
   </div>
   <div class="button">
       <a href="/my_posts.php">My Posts</a>
+  </div>
+  <div class="button">
+      <a href="/submit_post.php">Submit Post</a>
   </div>
 
     <?php else: ?>

@@ -37,7 +37,7 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
       <article>
         <h1>
-          <?php echo "Welcome to ".$config['title']." (the worlds best Redditclone), "; ?>
+          <?php echo "Welcome to ".$config['title'].", "; ?>
           <a href="/login.php">login </a>
           <?php echo "to join the discussion!"; ?>
         </h1>
@@ -116,7 +116,7 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
                 </div><!-- /author -->
 
-              </div>
+              </div><!-- /post-footer -->
 
             </div><!-- /post-content -->
 
@@ -126,9 +126,15 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
       <?php endforeach; ?>
 
+      <div class="back-to-top">
+        <a href="#top"><nobr>BACK TO TOP</nobr></a>
+      </div>
+
     </div><!-- /feed -->
 
   </div><!-- /main-container -->
+
+
 
 
 

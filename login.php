@@ -1,7 +1,7 @@
 <?php require __DIR__.'/views/header.php'; ?>
 
-<div class="login-outer-container">
-  <div class="login-inner-container">
+<div class="form-outer-container">
+  <div class="form-inner-container">
 
 
     <div class="login-container">
@@ -57,7 +57,7 @@
     </div>
 
 
-  </div><!-- /login-inner-container -->
-</div><!-- /login-outer-container -->
+  </div><!-- /form-inner-container -->
+</div><!-- /form-outer-container -->
 
 <?php require __DIR__.'/views/footer.php'; ?>

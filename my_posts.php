@@ -41,12 +41,6 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
           <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
         </div>
 
-        <div class="post-votes">
-          <div class="up-vote"><a href="/edit_post.php?id=<?php echo $post['id'];?>"><h2>EDIT</h2></a></div>
-          <div class="votes"><h2></h2></div>
-          <div class="down-vote"><a href="/app/posts/delete.php?id=<?php echo $post['id'];?>"><h2>DELETE</h2></a></div>
-        </div>
-
         <div class="post-image">
           <img class="img-responsive" src="<?php echo $post['image'];?>">
         </div>
@@ -69,10 +63,15 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
 
           </div> <!-- /post-body -->
 
-          <div class="post-footer">
+          <div class="post-footer my-posts">
 
-            <div class="author">
-              <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?></p>
+            <div class="post-options">
+              <div class="btn"><a href="/edit_post.php?id=<?php echo $post['id'];?>">EDIT</a></div>
+              <div class="btn"><a href="/app/posts/delete.php?id=<?php echo $post['id'];?>">DELETE</a></div>
+            </div>
+
+            <div class="author my-posts">
+              <p><nobr>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']);?></nobr></p>
             </div><!-- /author -->
 
           </div>

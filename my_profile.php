@@ -1,11 +1,9 @@
 <?php require __DIR__.'/views/header.php'; ?>
 
-<article>
-  <h1>My Profile</h1>
-  <h2>Here you can edit your profile settings!</h2>
-</article>
+<div class="form-outer-container">
+  <div class="form-inner-container my-profile">
 
-<article>
+    <div class="login-container">
 
     <h1>Email</h1>
 
@@ -21,16 +19,17 @@
             <input class="form-control" type="password" name="password" required>
         </div><!-- /form-group -->
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="submit" value="Submit"></input>
         <?php if (isset($_SESSION['message_updateEmail'])): ?>
           <p><?php echo $_SESSION['message_updateEmail']; ?></p>
         <?php endif; ?>
     </form>
 
-</article>
+    </div><!-- /login-container -->
 
 
-<article>
+
+<div class="login-container my-profile">
 
     <h1>Password</h1>
 
@@ -51,22 +50,22 @@
         </div><!-- /form-group -->
 
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="submit" value="Submit"></input>
         <?php if (isset($_SESSION['message_updatePassword'])): ?>
           <p><?php echo $_SESSION['message_updatePassword']; ?></p>
         <?php endif; ?>
     </form>
 
-</article>
+</div><!-- /login-container -->
 
 
-<article>
+<div class="login-container my-profile">
 
     <h1>Avatar</h1>
 
     <?php if (isset($_SESSION['avatar'])): $avatar = $_SESSION['avatar']; ?>
 
-    <img src='<?php echo $avatar ?>' width='180' height='180' style="border-radius:100%;border:2px solid red;">
+    <img class="edit-profile-avatar" src='<?php echo $avatar ?>'>
 
     <?php endif; ?>
 
@@ -74,17 +73,17 @@
     <form class="" action="app/auth/profile.php" method="post" enctype="multipart/form-data">
       <input type="file" name="avatar" accept=".png, .jpeg, .jpg" required>
       <br>
-      <button type="submit" name="upload">Upload</button>
+      <input type="submit" value="Upload" name="upload"></input>
       <?php if (isset($_SESSION['message_updateAvatar'])): ?>
         <p><?php echo $_SESSION['message_updateAvatar']; ?></p>
       <?php endif; ?>
 
     </form>
 
-</article>
+</div><!-- /login-container -->
 
 
-<article>
+<div class="login-container my-profile">
 
     <h1>Biography</h1>
 
@@ -102,7 +101,12 @@
 
     </form>
 
-</article>
+</div><!-- /login-container -->
+
+
+</div><!-- /login-container -->
+</div><!-- /form-inner-container -->
+</div><!-- /form-outer-container -->
 
 
 <?php require __DIR__.'/views/footer.php'; ?>

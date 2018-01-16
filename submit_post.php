@@ -1,8 +1,12 @@
 <?php require __DIR__.'/views/header.php'; ?>
 
-<article>
+<div class="form-outer-container">
+  <div class="form-inner-container">
 
-    <h1>Submit to CyberLink</h1>
+<div class="login-container">
+
+
+    <h1>Submit Post</h1>
 
     <form class="" action="app/posts/submit.php" method="post" enctype="multipart/form-data">
 
@@ -58,7 +62,9 @@
 
       </form>
 
-</article>
+</div><!-- /login-container -->
 
+</div><!-- /form-inner-container -->
+</div><!-- /form-outer-container -->
 
 <?php require __DIR__.'/views/footer.php'; ?>
