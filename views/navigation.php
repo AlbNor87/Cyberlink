@@ -2,6 +2,66 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <!-- <a class="navbar-brand" href="#"><?php echo $config['title']; ?></a> -->
 
+<div class="mobile-menu">
+
+
+
+  <nav role="navigation">
+
+  <div id="menuToggle">
+    <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+    <input type="checkbox" />
+
+    <!--
+    Some spans to act as a hamburger.
+
+    They are acting like a real hamburger,
+    not that McDonalds stuff.
+    -->
+    <span></span>
+    <span></span>
+    <span></span>
+
+    <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+    <ul id="menu">
+      <a href="/index.php"><li>Home</li></a>
+      <a href="/about.php"><li>About</li></a>
+      <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true): ?>
+
+        <a href="/my_profile.php"><li>My Profile</li></a>
+        <a href="/my_posts.php"><li>My Posts</li></a>
+        <a href="/submit_post.php"><li>Submit Post</li></a>
+        <a href="app/auth/logout.php"><li>Log Out</li></a>
+
+      <?php else: ?>
+
+        <a href="/login.php"><li>Login</li></a>
+
+      <?php endif; ?>
+
+    </ul>
+  </div>
+
+  <div class="cyberlink-logo">
+    <h1> <span class="blue">CYBER</span><span class="white">LiNK</span></h1>
+  </div>
+
+  <?php if (isset($_SESSION['avatar'])): $avatar = $_SESSION['avatar']; ?>
+
+  <div class="mobile-avatar">
+      <img class="current-user-avatar" src='<?php echo $avatar ?>'>
+  </div>
+  <?php endif; ?>
+
+</nav>
+
+</div>
 
 <div class="menu-container-left">
 

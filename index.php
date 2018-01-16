@@ -29,7 +29,7 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
     <article>
       <h1>
-        <?php echo "Welcome to ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
+        <?php echo "Welcome ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
       </h1>
     </article>
 
@@ -111,7 +111,7 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                 </div>
 
                 <div class="author">
-                  <p>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?><img class="userAvatar" src="<?php echo $post['avatar']; ?>" alt="users avatar"></p>
+                  <p><nobr>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']); ?> by <?php echo $post['username']; ?><img class="userAvatar" src="<?php echo $post['avatar']; ?>" alt="users avatar"></nobr></p>
 
 
                 </div><!-- /author -->
