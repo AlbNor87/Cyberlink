@@ -7,26 +7,25 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
 ?>
 
 
-<?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
-
-  <article>
-    <h1>My Posts</h1>
-    <h2>Here you can find, edit and/or delete all of the posts you have submitted!</h2>
-  </article>
 
 
+<div class="main-container">
 
-<?php else: ?>
+  <div class="feed-header">
 
-  <article>
-    <h1>
-      <?php echo "Welcome to ".$config['title']." (the worlds best Redditclone), "; ?>
-      <a href="/login.php">login </a>
-      <?php echo "to join the discussion!"; ?>
-    </h1>
-  </article>
+    <div class="feed-header-content">
 
-<?php endif; ?>
+      <?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
+
+        <article>
+          <h2>Here you can find, edit and/or delete all of the posts you have submitted!</h2>
+        </article>
+
+      <?php endif; ?>
+
+    </div><!-- /feed-header-content -->
+
+  </div><!-- /feed-header -->
 
 <div class="feed">
 
@@ -41,9 +40,7 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
           <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
         </div>
 
-        <div class="post-image">
-          <img class="img-responsive" src="<?php echo $post['image'];?>">
-        </div>
+      <a href="<?php echo $post['url']; ?>" class="post-image" style="background-image: url(<?php echo $post['image'];?>)" ></a>
 
         <div class="post-content">
 
@@ -84,5 +81,7 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
      <?php endforeach; ?>
 
   </div><!-- /feed -->
+
+  </div><!-- /main-container -->
 
 <?php require __DIR__.'/views/footer.php'; ?>

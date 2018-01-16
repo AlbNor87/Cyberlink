@@ -152,6 +152,11 @@ nav {
   margin: 3%;
 }
 
+.feed-header-content h2 {
+  color: black;
+  text-align: center;
+}
+
 .feed {
   margin-top: 3%;
 }
