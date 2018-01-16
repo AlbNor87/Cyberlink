@@ -13,9 +13,11 @@ require __DIR__.'/../app/autoload.php';
     <title><?php echo $config['title']; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/5.0.0/sanitize.min.css">
     <link rel="stylesheet" href="/assets/styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300|Plaster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
 </head>
 <body>
 
     <?php require __DIR__.'/navigation.php'; ?>
 
-    <div class="container py-5">
+    <div class="outer-container">

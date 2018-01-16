@@ -1,10 +1,8 @@
 <?php
 
 require __DIR__.'/views/header.php';
-// $postsArray = getPostsAll($pdo);
 
 if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true){
-$userId = $_SESSION['user_id'];
 
 $postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
 
@@ -13,15 +11,19 @@ $postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
 $postsArray = getPostsAll($pdo);
 
 }
+
 // die(var_dump($postsArray));
 
-// $myPostsArray = getPosts($pdo);
-// die(var_dump($myPostsArray));
-
+$userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 ?>
 
 <div class="main-container">
+
+<div class="feed-header">
+
+  <div class="feed-header-content">
+
 
   <?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
 
@@ -31,21 +33,23 @@ $postsArray = getPostsAll($pdo);
       </h1>
     </article>
 
+    <?php else: ?>
 
-  <?php else: ?>
+      <article>
+        <h1>
+          <?php echo "Welcome to ".$config['title']." (the worlds best Redditclone), "; ?>
+          <a href="/login.php">login </a>
+          <?php echo "to join the discussion!"; ?>
+        </h1>
+      </article>
 
-    <article>
-      <h1>
-        <?php echo "Welcome to ".$config['title']." (the worlds best Redditclone), "; ?>
-        <a href="/login.php">login </a>
-        <?php echo "to join the discussion!"; ?>
-      </h1>
-    </article>
+    <?php endif; ?>
 
-  <?php endif; ?>
+      </div><!-- /feed-header-content -->
+
+    </div><!-- /feed-header -->
 
   <div class="feed">
-
 
 
     <?php $rank = 1; foreach ($postsArray as $post): ?>
@@ -62,20 +66,20 @@ $postsArray = getPostsAll($pdo);
 
 
           <div class="post-votes">
+
+
             <div class="up-vote" >
 
-              <div class="thumbs up <?php if (isset($post['userVote']) && $post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="1"></div>
+              <div class="thumbs up <?php if (isset($post['userVote']) && $post['userVote'] === "1"){echo " active";}?>" data-liked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $userId;?>" data-vote-dir="1"></div>
 
             </div><!-- /up-vote -->
-
 
 
             <div class="votes" data-vote-display-id="<?php echo $post['id'];?>"><p><?php echo $post['sum'];?><p></div>
 
 
-
               <div class="down-vote">
-                <div class="thumbs down <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php if (isset($_SESSION['user_id'])){echo $_SESSION['user_id'];}?>" data-vote-dir="-1"></div>
+                <div class="thumbs down <?php if ($post['userVote'] === "-1"){echo " active";}?>" data-unliked="<?php echo $post['id'];?>" data-post-id="<?php echo $post['id'];?>" data-user-id="<?php echo $userId;?>" data-vote-dir="-1"></div>
               </div>
             </div>
 
@@ -115,6 +119,7 @@ $postsArray = getPostsAll($pdo);
           </div> <!-- /post -->
 
         </div><!-- /post-container -->
+
       <?php endforeach; ?>
 
     </div><!-- /feed -->

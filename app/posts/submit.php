@@ -17,7 +17,7 @@ if (isset($_POST['title'])) {
     $_SESSION['formUrl'] = $url;
     $_SESSION['formDescription'] = $description;
 
-    if (!filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED)) {
+    if (!filter_var($url, FILTER_VALIDATE_URL)) {
       $_SESSION['message_postUrl'] = "The url you provided is not a valid url, please try again.";
       header("Location:/submit_post.php");
     }
