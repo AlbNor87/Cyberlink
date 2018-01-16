@@ -6,10 +6,11 @@ require __DIR__.'/../autoload.php';
 
 if (isset($_POST['email'],$_POST['password'])) {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $username = filter_var($_POST['username'], FILTER_SANITIZE_EMAIL);
+    $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     $passwordHash = password_hash("$password", PASSWORD_DEFAULT);
     $avatar = 'img/user.png';
+
 
     $statement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE email = :email');
     if (!$statement) {
@@ -27,7 +28,6 @@ if (isset($_POST['email'],$_POST['password'])) {
       if (!$statement) {
         die(var_dump($pdo->errorInfo()));
       }
-
       $statement->bindParam(':username', $username, PDO::PARAM_STR);
       $statement->bindParam(':email', $email, PDO::PARAM_STR);
       $statement->bindParam(':password', $passwordHash, PDO::PARAM_STR);

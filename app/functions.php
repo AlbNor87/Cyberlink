@@ -199,7 +199,7 @@ function updateBio($newBio, $user_id, $pdo){
 
 function getPostsAll($pdo) {
 
-  $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY posts.rank");
+  $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY sum");
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
@@ -226,7 +226,7 @@ $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(v
 
 function getPostsByUserId($pdo, $userId) {
 
-  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, posts.rank, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.user_id = :userId ORDER BY posts.rank');
+  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.user_id = :userId ORDER BY posts.id');
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
@@ -242,7 +242,7 @@ function getPostsByUserId($pdo, $userId) {
 
 function getPostsByPostId($pdo, $postId) {
 
-  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, posts.rank, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.id = :postId ORDER BY posts.id');
+  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.id = :postId ORDER BY posts.id');
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }

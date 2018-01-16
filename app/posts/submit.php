@@ -17,10 +17,10 @@ if (isset($_POST['title'])) {
     $_SESSION['formUrl'] = $url;
     $_SESSION['formDescription'] = $description;
 
-    if (!filter_var($url, FILTER_VALIDATE_URL)) {
-      $_SESSION['message_postUrl'] = "The url you provided is not a valid url, please try again.";
-      header("Location:/submit_post.php");
-    }
+    // if (!filter_var($url, FILTER_VALIDATE_URL)) {
+    //   $_SESSION['message_postUrl'] = "The url you provided is not a valid url, please try again.";
+    //   header("Location:/submit_post.php");
+    // }
 
     $statement = $pdo->prepare('SELECT COUNT(*) FROM posts WHERE title = :title');
     if (!$statement) {
@@ -62,6 +62,9 @@ if (isset($_POST['title'])) {
       }
 
       $statement = $pdo->prepare('INSERT INTO posts(title, url, description, image, user_id, timeOfSub) VALUES(:title, :url, :description, :image, :user_id, :timeOfSub)');
+
+      // die(var_dump($statement));
+
       $statement->bindParam(':title', $title, PDO::PARAM_STR);
       $statement->bindParam(':url', $url, PDO::PARAM_STR);
       $statement->bindParam(':description', $description, PDO::PARAM_STR);
@@ -69,6 +72,8 @@ if (isset($_POST['title'])) {
       $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
       $statement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
       $statement->execute();
+
+      // die(var_dump($statement->execute()));
 
       $getStatement = $pdo->prepare('SELECT * FROM posts WHERE timeOfSub = :timeOfSub');
       $getStatement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
