@@ -163,16 +163,6 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
   </div><!-- /main-container -->
 
 
-
-
-
-
-
-
-
-
-
-
 <script>
 
 'use strict';
@@ -239,9 +229,6 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
               }
 
-              console.log(voteDir);
-              // console.log(data['sum(vote)']);
-
             })
             .catch(console.error)
 
@@ -255,7 +242,6 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
             }
           }
-
 
 
 </script>
