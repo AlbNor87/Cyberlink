@@ -1,7 +1,7 @@
     </div><!-- /container -->
 
     <div class="footer">
-      <p>Website author Albert Norberg 2017-2018</p>
+      <p>© Copyright <?php echo date("Y");?>, Albert Norberg</p>
     </div>
 
 

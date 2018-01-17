@@ -6,7 +6,10 @@ $postsArray = getPostsByPostId($pdo, $_GET['id']);
 
 ?>
 
-<article>
+<div class="form-outer-container">
+  <div class="form-inner-container edit-profile">
+
+<div class="login-container">
 
     <h1>Edit Post</h1>
     <h2>Post id: <?php
@@ -35,9 +38,17 @@ $postsArray = getPostsByPostId($pdo, $_GET['id']);
 
       <br>
 
+
+
+
+
+
+
+
+
       <?php if (isset($postsArray['image'])):?>
 
-      <img src='<?php echo $postsArray['image']?>' width='180' height='180' style="border-radius:100%;border:2px solid red;">
+    <img class="edit-profile-avatar" src='<?php echo $postsArray['image']?>'>
 
       <?php endif; ?>
 
@@ -71,7 +82,10 @@ $postsArray = getPostsByPostId($pdo, $_GET['id']);
 
       </form>
 
-</article>
+</div><!-- /login-container -->
+
+</div><!-- /form-inner-container -->
+</div><!-- /form-outer-container -->
 
 
 <?php require __DIR__.'/views/footer.php'; ?>

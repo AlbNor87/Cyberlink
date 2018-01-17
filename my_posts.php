@@ -27,61 +27,61 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
 
   </div><!-- /feed-header -->
 
-<div class="feed">
+  <div class="feed">
 
-  <?php $rank = 1; foreach ($postsArray as $post): ?>
+    <?php $rank = 1; foreach ($postsArray as $post): ?>
 
 
-    <div class="post-container">
+      <div class="post-container">
 
-      <div class="post" data-id="<?php echo $post['id'];?>" >
+        <div class="post" data-id="<?php echo $post['id'];?>" >
 
-        <div class="post-rank">
-          <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
-        </div>
-
-      <a href="<?php echo $post['url']; ?>" class="post-image" style="background-image: url(<?php echo $post['image'];?>)" ></a>
-
-        <div class="post-content">
-
-          <div class="post-header">
-
-            <div class="title">
-              <h2><?php echo strtoupper($post['title']); ?></h2>
-            </div>
-
+          <div class="post-rank">
+            <div class="rank"><h2><?php echo $rank; $rank++; ?></h2></div>
           </div>
 
-          <div class="post-body">
+          <a href="<?php echo $post['url']; ?>" class="post-image" style="background-image: url(<?php echo $post['image'];?>)" ></a>
 
-            <div class="content">
-              <?php echo $post['description']; ?>
+          <div class="post-content">
+
+            <div class="post-header">
+
+              <div class="title">
+                <h2><?php echo strtoupper($post['title']); ?></h2>
+              </div>
+
             </div>
 
-          </div> <!-- /post-body -->
+            <div class="post-body">
 
-          <div class="post-footer my-posts">
+              <div class="content">
+                <?php echo $post['description']; ?>
+              </div>
 
-            <div class="post-options">
-              <div class="btn"><a href="/edit_post.php?id=<?php echo $post['id'];?>">EDIT</a></div>
-              <div class="btn"><a href="/app/posts/delete.php?id=<?php echo $post['id'];?>">DELETE</a></div>
+            </div> <!-- /post-body -->
+
+            <div class="post-footer my-posts">
+
+              <div class="post-options">
+                <div class="btn"><a href="/edit_post.php?id=<?php echo $post['id'];?>">EDIT</a></div>
+                <div class="btn"><a href="/app/posts/delete.php?id=<?php echo $post['id'];?>">DELETE</a></div>
+              </div>
+
+              <div class="author my-posts">
+                <p><nobr>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']);?></nobr></p>
+              </div><!-- /author -->
+
             </div>
 
-            <div class="author my-posts">
-              <p><nobr>Submitted on <?php echo date("F j, Y, g:i a", $post['timeOfSub']);?></nobr></p>
-            </div><!-- /author -->
+          </div><!-- /post-content -->
 
-          </div>
+        </div> <!-- /post -->
 
-        </div><!-- /post-content -->
-
-      </div> <!-- /post -->
-
-    </div><!-- /post-container -->
-     <?php endforeach; ?>
+      </div><!-- /post-container -->
+    <?php endforeach; ?>
 
   </div><!-- /feed -->
 
-  </div><!-- /main-container -->
+</div><!-- /main-container -->
 
 <?php require __DIR__.'/views/footer.php'; ?>

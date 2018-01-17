@@ -303,6 +303,7 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .post-footer {
@@ -421,7 +422,7 @@ nav {
   width: 100%;
 }
 
-.form-inner-container.my-profile {
+.form-inner-container.my-profile, .form-inner-container.edit-post  {
   width: 60%;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -445,6 +446,14 @@ nav {
   border: 2px solid white;
 }
 
+.edit-profile-avatar {
+  margin: 1%;
+  width: 180px;
+  height: 180px;
+  border-radius: 0.5vh;
+  border: 2px solid white;
+}
+
 .back-to-top {
   background: linear-gradient(black, rgb(27, 27, 27));
   color: white;
@@ -463,6 +472,13 @@ nav {
   font-size: 1.3rem;
 }
 
+.about {
+  padding-bottom: 10%;
+  text-align: center;
+  justify-content: center;
+
+}
+
 .footer {
   background: linear-gradient(black, rgb(27, 27, 27));
   color: lightgrey;
@@ -474,6 +490,7 @@ nav {
   align-items: center;
   z-index: 99;
 }
+
 
 input[type=text],
 input[type=email],
