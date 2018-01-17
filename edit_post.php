@@ -48,7 +48,7 @@ $postsArray = getPostsByPostId($pdo, $_GET['id']);
 
       <?php if (isset($postsArray['image'])):?>
 
-    <img class="edit-profile-avatar" src='<?php echo $postsArray['image']?>'>
+    <img class="edit-post-image" src='<?php echo $postsArray['image']?>'>
 
       <?php endif; ?>
 
