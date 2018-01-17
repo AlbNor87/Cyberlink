@@ -8,7 +8,7 @@
 
       <h1>Submit Post</h1>
 
-      <form class="" action="app/posts/submit.php" method="post" enctype="multipart/form-data">
+      <form action="app/posts/submit.php" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
           <label for="url">Title</label><br>

@@ -147,6 +147,8 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 <script>
 
+'use strict';
+
   const voteLinks = document.querySelectorAll('.up, .down');
 
     voteLinks.forEach(function(link) {

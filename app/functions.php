@@ -144,43 +144,6 @@ function updatePassword($user_id, $newPassword, $password, $pdo) {
 
 
 
-// function updateAvatar($avatar, $name, $user_id, $filetype, $allowed, $dir, $avatarInDB, $pdo) {
-//
-//   //Upload new avatar
-//   if (!in_array($filetype, $allowed)) {
-//         $_SESSION['message_updateAvatar'] = "The uploaded file type is not allowed.";
-//       }
-//   elseif ($avatar["size"] > 3145728) {
-//       $_SESSION['message_updateAvatar'] = "The uploaded file exceeded the file size limit, please choose a picture of a smaller size. Your old avatar will remain until you replace it.";
-//   }
-//   else {
-//
-//     //Remove existing avatar for this specific user
-//     if ($avatarInDB !== "img/user.png"){
-//     unlink( __DIR__.'/..'.'/..'.'/'.'/'.$avatarInDB );
-//     }
-//
-//     move_uploaded_file($avatar["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$user_id.'.'.$filetype);
-//
-//     //Update avatar in database
-//     $newAvatarInDB = $dir.$user_id.'.'.$filetype;
-//
-//     $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE user_id = :id");
-//     $statement->bindParam(':newAvatarInDB', $newAvatarInDB, PDO::PARAM_STR);
-//     $statement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-//     $statement->execute();
-//
-//     $user = $statement->fetch(PDO::FETCH_ASSOC);
-//
-//     $_SESSION['message_updateAvatar'] = "Your avatar was successfully uploaded!";
-//     $_SESSION['avatar'] = $newAvatarInDB;
-//
-//   }
-//
-// }
-
-
-
 function updateBio($newBio, $user_id, $pdo){
 
   $statement = $pdo->prepare("UPDATE users SET bio = :newBio WHERE user_id = :user_id");
@@ -212,7 +175,7 @@ function getPostsAll($pdo) {
 
 function getPostsAllWithUserId($pdo, $userId) {
 
-$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY sum");
+$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY timeOfSub DESC");
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }

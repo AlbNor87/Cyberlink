@@ -13,14 +13,29 @@ if (isset($_POST['title'])) {
     $image = 'img/post.svg';
     $vote = 0;
 
+
+
     $_SESSION['formTitle'] = $title;
     $_SESSION['formUrl'] = $url;
     $_SESSION['formDescription'] = $description;
 
-    // if (!filter_var($url, FILTER_VALIDATE_URL)) {
-    //   $_SESSION['message_postUrl'] = "The url you provided is not a valid url, please try again.";
-    //   header("Location:/submit_post.php");
+
+    // if (filter_var($url, FILTER_VALIDATE_URL)) {
+    //     echo("$url is a valid URL");
+    // } else {
+
+    //     $_SESSION['message_postUrl'] = "The uploaded file type is not allowed.";
+    // header("Location:/submit_post.php");
     // }
+
+    if (substr( $url, 0, 7 ) === "http://" || substr( $url, 0, 8 ) === "https://") {
+
+      die(var_dump($url));
+
+    } else {
+
+      $url = "http://".$url;
+    }
 
     $statement = $pdo->prepare('SELECT COUNT(*) FROM posts WHERE title = :title');
     if (!$statement) {
