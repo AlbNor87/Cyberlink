@@ -1,5 +1,5 @@
 # CyberLink
-![Carrey](https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif)
+![Carrey](https://media.giphy.com/media/RRerwvHrb0nxm/giphy.gif)
 
 ## Assignment
 - Create a clone of the website <a href="https://www.reddit.com/">reddit</a>
