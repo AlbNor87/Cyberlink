@@ -14,7 +14,6 @@ if (isset($_POST['title'])) {
     $vote = 0;
 
 
-
     $_SESSION['formTitle'] = $title;
     $_SESSION['formUrl'] = $url;
     $_SESSION['formDescription'] = $description;
@@ -78,8 +77,6 @@ if (isset($_POST['title'])) {
 
       $statement = $pdo->prepare('INSERT INTO posts(title, url, description, image, user_id, timeOfSub) VALUES(:title, :url, :description, :image, :user_id, :timeOfSub)');
 
-      // die(var_dump($statement));
-
       $statement->bindParam(':title', $title, PDO::PARAM_STR);
       $statement->bindParam(':url', $url, PDO::PARAM_STR);
       $statement->bindParam(':description', $description, PDO::PARAM_STR);
@@ -87,8 +84,6 @@ if (isset($_POST['title'])) {
       $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
       $statement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
       $statement->execute();
-
-      // die(var_dump($statement->execute()));
 
       $getStatement = $pdo->prepare('SELECT * FROM posts WHERE timeOfSub = :timeOfSub');
       $getStatement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);

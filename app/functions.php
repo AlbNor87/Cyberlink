@@ -26,7 +26,7 @@ function emailExistsInDB($email, $pdo) {
   $statement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE email = :email');
   if (!$statement) {
     die(var_dump($pdo->errorInfo()));
-    }
+  }
   $statement->bindParam(':email', $email, PDO::PARAM_STR);
   $statement->execute();
   $thisEmailInDbCount = $statement->fetch(PDO::FETCH_ASSOC);

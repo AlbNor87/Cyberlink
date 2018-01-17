@@ -29,40 +29,43 @@ if (isset($_POST['title'])) {
     $statement->execute();
     $thisTitleInDbCount = $statement->fetch(PDO::FETCH_ASSOC);
 
-    // die(var_dump($oldTitle));
-
     $titleExistsInDB = (int)$thisTitleInDbCount['COUNT(*)'];
+
 
     if ($titleExistsInDB === 0 || $title === $oldTitle){
 
       if ($_FILES['image']['name'] !== "") {
-        $image = $_FILES['image'];
-        $name = $image['name'];
-        $dir = 'uploads/';
-        $filetype = pathinfo($name, PATHINFO_EXTENSION);
-        $allowed = ['png', 'jpg', 'jpeg'];
 
-        if (!in_array($filetype, $allowed)) {
-          $_SESSION['message_postImage'] = "The uploaded file type is not allowed.";
-          header("Location:/submit_post.php");
-          exit;
-        }
-        elseif ($image["size"] > 3145728) {
-          $_SESSION['message_postImage'] = "The uploaded file exceeded the file size limit, please choose an image of a smaller size.";
-          header("Location:/submit_post.php");
-          exit;
-        }
-        else {
+        if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+          $image = $_FILES['image'];
+          $name = $image['name'];
+          $dir = 'uploads/';
+          $filetype = pathinfo($name, PATHINFO_EXTENSION);
+          $allowed = ['png', 'jpg', 'jpeg'];
 
-          if ($image !== $oldImage && $image !== 'img/post.jpg'){
-          unlink( __DIR__.'/..'.'/..'.'/'.$oldImage );
+          if (!in_array($filetype, $allowed)) {
+            $_SESSION['message_postImage'] = "The uploaded file type is not allowed.";
+            header("Location:/submit_post.php");
+            exit;
           }
+          elseif ($image["size"] > 3145728) {
+            $_SESSION['message_postImage'] = "The uploaded file exceeded the file size limit, please choose an image of a smaller size.";
+            header("Location:/submit_post.php");
+            exit;
+          }
+          else {
 
-          move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$user_id.$timeOfSub.'.'.$filetype);
+            if ($image !== $oldImage && $image !== 'img/post.jpg'){
+              unlink( __DIR__.'/..'.'/..'.'/'.$oldImage );
+            }
 
-          $image = $dir.$user_id.$timeOfSub.'.'.$filetype;
+            move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$user_id.$timeOfSub.'.'.$filetype);
 
-          $_SESSION['message_updateImage'] = "The image was sucessfully moved to the upload directory!".$image;
+            $image = $dir.$user_id.$timeOfSub.'.'.$filetype;
+
+            $_SESSION['message_updateImage'] = "The image was sucessfully moved to the upload directory!".$image;
+
+          }
 
         }
 
@@ -81,8 +84,6 @@ if (isset($_POST['title'])) {
       $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
       $statement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
       $statement->execute();
-
-      // die(var_dump($statement->execute()));
 
       unset($_SESSION['formTitle']);
       unset($_SESSION['formUrl']);

@@ -38,44 +38,44 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 <div class="main-container">
 
-<div class="feed-header">
+  <div class="feed-header">
 
-  <div class="feed-header-content">
+    <div class="feed-header-content">
 
 
-  <?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
+      <?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
 
-    <article class="feed-header-menu">
+        <article class="feed-header-menu">
 
-      <h1>
-        <?php echo "Welcome ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
-      </h1>
-      <div class="sortButtons">
-          <a class="btn sort" href="index.php?sortBy=date"><nobr>SORT BY DATE</nobr></a>
-          <a class="btn sort" href="index.php?sortBy=votes"><nobr>SORT BY VOTES</nobr></a>
-      </div>
-
-    </article>
-
-    <?php else: ?>
-
-      <article class="feed-header-menu">
-        <h1>
-          <?php echo "Welcome to ".$config['title'].", "; ?>
-          <a href="/login.php">login </a>
-          <?php echo "to join the discussion!"; ?>
-        </h1>
-        <div class="sortButtons">
+          <h1>
+            <?php echo "Welcome ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
+          </h1>
+          <div class="sortButtons">
             <a class="btn sort" href="index.php?sortBy=date"><nobr>SORT BY DATE</nobr></a>
             <a class="btn sort" href="index.php?sortBy=votes"><nobr>SORT BY VOTES</nobr></a>
-        </div>
-      </article>
+          </div>
 
-    <?php endif; ?>
+        </article>
 
-      </div><!-- /feed-header-content -->
+      <?php else: ?>
 
-    </div><!-- /feed-header -->
+        <article class="feed-header-menu">
+          <h1>
+            <?php echo "Welcome to ".$config['title'].", "; ?>
+            <a href="/login.php">login </a>
+            <?php echo "to join the discussion!"; ?>
+          </h1>
+          <div class="sortButtons">
+            <a class="btn sort" href="index.php?sortBy=date"><nobr>SORT BY DATE</nobr></a>
+            <a class="btn sort" href="index.php?sortBy=votes"><nobr>SORT BY VOTES</nobr></a>
+          </div>
+        </article>
+
+      <?php endif; ?>
+
+    </div><!-- /feed-header-content -->
+
+  </div><!-- /feed-header -->
 
   <div class="feed">
 

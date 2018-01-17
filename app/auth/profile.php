@@ -43,11 +43,7 @@ if (isset($_FILES['avatar'])) {
   $dir="uploads/";
   $avatarInDB = $_SESSION['avatar'];
 
-  // die(var_dump($filetype));
 
-  // updateAvatar($avatar, $name, $user_id, $filetype, $allowed, $dir, $avatarInDB, $pdo);
-
-  //Upload new avatar
   if (!in_array($filetype, $allowed)) {
         $_SESSION['message_updateAvatar'] = "The uploaded file type is not allowed.";
       }
@@ -69,8 +65,6 @@ if (isset($_FILES['avatar'])) {
 
     //Update avatar in database
     $newAvatarInDB = $dir.$user_id.'.'.$filetype;
-
-    // die(var_dump($newAvatarInDB));
 
     $statement = $pdo->prepare("UPDATE users SET avatar = :newAvatarInDB WHERE user_id = :id");
     if (!$statement) {

@@ -47,7 +47,7 @@ $postsArray = getPostsByUserId($pdo, $_SESSION['user_id']);
             <div class="post-header">
 
               <div class="title">
-                <h2><?php echo strtoupper($post['title']); ?></h2>
+                <h2><a href="<?php echo $post['url']; ?>"><?php echo strtoupper($post['title']); ?></a></h2>
               </div>
 
             </div>

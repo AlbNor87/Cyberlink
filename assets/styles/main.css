@@ -287,7 +287,11 @@ nav {
   margin: 0px;
 }
 
-.title h2:hover {
+.title a, .title a:visited {
+  color: black;
+}
+
+.title h2:hover, .title a:hover {
   color: dodgerblue;
   font-family: 'Bungee Inline', cursive;
   margin: 0px;
@@ -403,7 +407,9 @@ nav {
 .userAvatar {
   margin-left: 1%;
   width: 4%;
+  height: 4%;
   min-width: 40px;
+  min-height: 40px;
   border-radius: 50%;
   border: 1px lightgrey solid;
 }
@@ -649,6 +655,8 @@ and (orientation : portrait) {
     margin-left: 1%;
     width: 4%;
     min-width: 30px;
+    height: 4%;
+    min-height: 30px;
     border-radius: 50%;
     border: 1px lightgrey solid;
   }
