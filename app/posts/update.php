@@ -29,6 +29,8 @@ if (isset($_POST['title'])) {
     $statement->execute();
     $thisTitleInDbCount = $statement->fetch(PDO::FETCH_ASSOC);
 
+    // die(var_dump($oldTitle));
+
     $titleExistsInDB = (int)$thisTitleInDbCount['COUNT(*)'];
 
     if ($titleExistsInDB === 0 || $title === $oldTitle){
@@ -58,23 +60,29 @@ if (isset($_POST['title'])) {
 
           move_uploaded_file($image["tmp_name"], __DIR__.'/..'.'/..'.'/'.$dir.$user_id.$timeOfSub.'.'.$filetype);
 
-          $image2 = $dir.$user_id.$timeOfSub.'.'.$filetype;
+          $image = $dir.$user_id.$timeOfSub.'.'.$filetype;
 
-          $_SESSION['message_updateImage'] = "The image was sucessfully moved to the upload directory!".$image2;
+          $_SESSION['message_updateImage'] = "The image was sucessfully moved to the upload directory!".$image;
 
         }
 
       }
 
-      $statement = $pdo->prepare('UPDATE posts SET title = :title, url = :url, description = :description, image = :image2, user_id = :user_id, timeOfSub = :timeOfSub WHERE id = :postId');
+
+      $statement = $pdo->prepare('UPDATE posts SET title = :title, url = :url, description = :description, image = :image, user_id = :user_id, timeOfSub = :timeOfSub WHERE id = :postId');
+      if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+        }
       $statement->bindParam(':postId', $postId, PDO::PARAM_INT);
       $statement->bindParam(':title', $title, PDO::PARAM_STR);
       $statement->bindParam(':url', $url, PDO::PARAM_STR);
       $statement->bindParam(':description', $description, PDO::PARAM_STR);
-      $statement->bindParam(':image2', $image2, PDO::PARAM_STR);
+      $statement->bindParam(':image', $image, PDO::PARAM_STR);
       $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
       $statement->bindParam(':timeOfSub', $timeOfSub, PDO::PARAM_INT);
       $statement->execute();
+
+      // die(var_dump($statement->execute()));
 
       unset($_SESSION['formTitle']);
       unset($_SESSION['formUrl']);

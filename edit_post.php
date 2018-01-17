@@ -39,13 +39,6 @@ $postsArray = getPostsByPostId($pdo, $_GET['id']);
       <br>
 
 
-
-
-
-
-
-
-
       <?php if (isset($postsArray['image'])):?>
 
     <img class="edit-post-image" src='<?php echo $postsArray['image']?>'>

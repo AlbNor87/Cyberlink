@@ -30,7 +30,7 @@ if (isset($_POST['title'])) {
 
     if (substr( $url, 0, 7 ) === "http://" || substr( $url, 0, 8 ) === "https://") {
 
-      die(var_dump($url));
+      // die(var_dump($url));
 
     } else {
 

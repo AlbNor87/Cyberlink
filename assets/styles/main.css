@@ -151,6 +151,7 @@ nav {
 
 .feed-header-content {
   margin: 3%;
+  margin-bottom: 0;
 }
 
 .feed-header-content h2 {
@@ -373,6 +374,25 @@ nav {
   margin-right: 3%;
 }
 
+.feed-header-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn.sort {
+  width: 35%;
+  padding: 1%;
+  margin: 1%;
+}
+
+.sortButtons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .post-comments {
   margin-bottom: 5%;
 }
@@ -581,8 +601,6 @@ and (orientation : portrait) {
     width: 100%;
   }
 
-
-
   .btn {
     background: linear-gradient(black, rgb(27, 27, 27));
     color: white;
@@ -595,6 +613,12 @@ and (orientation : portrait) {
     font-family: 'Bungee Inline', cursive;
     font-size: 1rem;
     margin-right: 3%;
+  }
+
+  .btn.sort {
+    width: 50%;
+    padding: 1%;
+    margin: 1%;
   }
 
   .post-votes {

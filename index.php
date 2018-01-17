@@ -4,11 +4,29 @@ require __DIR__.'/views/header.php';
 
 if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true){
 
-$postsArray = getPostsAllWithUserId($pdo, $_SESSION['user_id']);
+  if (isset($_GET['sortBy']) && $_GET['sortBy'] === "date"){
+
+
+    $postsArray = getPostsAllWithUserIdSortByDate($pdo, $_SESSION['user_id']);
+
+  } else {
+
+    $postsArray = getPostsAllWithUserIdSortByVotes($pdo, $_SESSION['user_id']);
+
+  }
 
 } else {
 
-$postsArray = getPostsAll($pdo);
+  if (isset($_GET['sortBy']) && $_GET['sortBy'] === "date"){
+
+
+    $postsArray = getPostsAllSortByDate($pdo);
+
+  } else {
+
+    $postsArray = getPostsAllSortByVotes($pdo);
+
+  }
 
 }
 
@@ -27,20 +45,30 @@ $userId = isset ($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
   <?php if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true):?>
 
-    <article>
+    <article class="feed-header-menu">
+
       <h1>
         <?php echo "Welcome ".$_SESSION['username'].", you are now successfully logged in and ready to join the discussion! "; ?><a href="/submit_post.php">Submit a new post!</a>
       </h1>
+      <div class="sortButtons">
+          <a class="btn sort" href="index.php?sortBy=date"><nobr>SORT BY DATE</nobr></a>
+          <a class="btn sort" href="index.php?sortBy=votes"><nobr>SORT BY VOTES</nobr></a>
+      </div>
+
     </article>
 
     <?php else: ?>
 
-      <article>
+      <article class="feed-header-menu">
         <h1>
           <?php echo "Welcome to ".$config['title'].", "; ?>
           <a href="/login.php">login </a>
           <?php echo "to join the discussion!"; ?>
         </h1>
+        <div class="sortButtons">
+            <a class="btn sort" href="index.php?sortBy=date"><nobr>SORT BY DATE</nobr></a>
+            <a class="btn sort" href="index.php?sortBy=votes"><nobr>SORT BY VOTES</nobr></a>
+        </div>
       </article>
 
     <?php endif; ?>

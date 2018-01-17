@@ -160,9 +160,9 @@ function updateBio($newBio, $user_id, $pdo){
 
 
 
-function getPostsAll($pdo) {
+function getPostsAllSortByVotes($pdo) {
 
-  $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY sum");
+  $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT count() FROM votes WHERE votes.post_id = posts.id) AS voteCount FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY voteCount DESC");
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
@@ -173,9 +173,36 @@ function getPostsAll($pdo) {
 
 
 
-function getPostsAllWithUserId($pdo, $userId) {
+function getPostsAllSortByDate($pdo) {
 
-$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY timeOfSub DESC");
+  $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT count() FROM votes WHERE votes.post_id = posts.id) AS voteCount FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY timeOfSub DESC");
+  if (!$postsStatement) {
+    die(var_dump($pdo->errorInfo()));
+    }
+  $postsStatement->execute();
+  return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+
+
+function getPostsAllWithUserIdSortByDate($pdo, $userId) {
+
+$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote, (SELECT count() FROM votes WHERE votes.post_id = posts.id) AS voteCount FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY timeOfSub DESC");
+  if (!$postsStatement) {
+    die(var_dump($pdo->errorInfo()));
+    }
+  $postsStatement->bindParam(':userId', $userId, PDO::PARAM_STR);
+  $postsStatement->execute();
+  return $postsStatement->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+
+
+function getPostsAllWithUserIdSortByVotes($pdo, $userId) {
+
+$postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(vote) FROM votes WHERE posts.id = votes.post_id) AS sum, (SELECT sum(vote) FROM votes WHERE votes.user_id = :userId AND votes.post_id = posts.id) AS userVote, (SELECT count() FROM votes WHERE votes.post_id = posts.id) AS voteCount FROM posts JOIN votes ON posts.id=votes.post_id JOIN users ON posts.user_id = users.user_id GROUP BY posts.id ORDER BY voteCount DESC");
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
@@ -189,7 +216,7 @@ $postsStatement = $pdo->prepare("SELECT posts.*, users.*, votes.*, (SELECT sum(v
 
 function getPostsByUserId($pdo, $userId) {
 
-  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.user_id = :userId ORDER BY posts.id');
+  $postsStatement = $pdo->prepare('SELECT posts.id, posts.title, posts.description, posts.url, posts.image, posts.votes_id, posts.timeOfSub, users.username FROM posts JOIN users WHERE posts.user_id = users.user_id AND posts.user_id = :userId ORDER BY timeOfSub DESC');
   if (!$postsStatement) {
     die(var_dump($pdo->errorInfo()));
     }
